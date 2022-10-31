@@ -1,43 +1,27 @@
 import {authMe} from "./auth-reducer";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "./store";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
-const SET_INITIALISE = "initialReducer/SET-INITIALISE"
-export const setInitialData = (): InitialActionType => ({type: SET_INITIALISE})
-
-
-const initialReducer = (state = initialState, action: InitialActionType): InitialStateType => {
-
-    switch (action.type) {
-        case SET_INITIALISE:
-            return {
-                ...state,
-                initialize: true
-            }
-        default:
-            return state;
+export const initial = createAsyncThunk("initial/initial", async (arg, thunkAPI) => {
+    try {
+        let promise = thunkAPI.dispatch(authMe())
+        await Promise.all([promise])
+        thunkAPI.dispatch(setInitialData())
+    } catch (e) {
+        return thunkAPI.rejectWithValue(null)
     }
-}
+})
 
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, InitialActionType>
+const slice = createSlice({
+    name: "initial",
+    initialState: {
+        initialize: false
+    },
+    reducers: {
+        setInitialData: (state) => {
+            state.initialize = true
+        }
+    }
+})
 
-export const initial = (): ThunkType => async (dispatch) => {
-    let promise = dispatch(authMe())
-    await Promise.all([promise])
-    dispatch(setInitialData())
-}
-
-export default initialReducer;
-
-
-type InitialStateType = {
-    initialize: boolean
-}
-
-let initialState: InitialStateType = {
-    initialize: false
-}
-
-type InitialActionType = {
-    type: typeof SET_INITIALISE
-}
+export const initialReducer = slice.reducer
+export const {setInitialData} = slice.actions

@@ -8,12 +8,12 @@ import {useDispatch} from "react-redux";
 import {setEditMode, setError} from "../../../redux/profile-reducer";
 import {ProfileType} from "../ProfileContainer";
 import {ProfileData} from "./ProfileData";
+import {DispatchType} from "../../../redux/store";
 
 
 export const ProfileInfo: React.FC<ProfileInfoType> = ({
                                                            profile,
                                                            status,
-                                                           updateStatus,
                                                            isOwner,
                                                            savePhoto,
                                                            saveProfile,
@@ -21,7 +21,7 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
                                                            editMode,
                                                            isAuth
                                                        }) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<DispatchType>()
     const filePicker = useRef<HTMLInputElement>(null)
 
     if (!profile) {
@@ -37,11 +37,11 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
     }
 
     const enableEditMode = () => {
-        dispatch(setEditMode(true))
+        dispatch(setEditMode({editMode: true}))
     }
     const disableEditMode = () => {
-        dispatch(setEditMode(false))
-        dispatch(setError(""))
+        dispatch(setEditMode({editMode: false}))
+        dispatch(setError({error: ""}))
     }
 
     const handlePick = () => {
@@ -60,11 +60,11 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
                            ref={filePicker}
                            accept={"image/*,.png, .jpg, .gif, .web"}/></div>}
                 <ProfileStatus status={status}
-                               updateStatus={updateStatus}
                                isOwner={isOwner}
                                isAuth={isAuth}
                 />
-                {isAuth && isOwner && editMode && <button className={classes.btn} onClick={disableEditMode}>Cancel editing</button>}
+                {isAuth && isOwner && editMode &&
+                    <button className={classes.btn} onClick={disableEditMode}>Cancel editing</button>}
                 {isAuth && isOwner && editMode
                     ? <ProfileDataEditingForm profile={profile}
                                               saveProfile={saveProfile}
@@ -81,7 +81,6 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
 type ProfileInfoType = {
     profile: ProfileType
     status: string
-    updateStatus(status: string): void
     isOwner: boolean
     isAuth: boolean
     savePhoto(file: File): void

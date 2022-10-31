@@ -2,23 +2,24 @@ import React from "react";
 import classes from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import PostForm, {FormikValues} from "../../form/PostForm";
+import {useDispatch} from "react-redux";
+import {DispatchType, useAppSelector} from "../../../redux/store";
+import {addPost, deletePost} from "../../../redux/profile-reducer";
 
 export type PostDataType = {
     id: number
     message: string
     likeCount: number
 }
-type MyPostsType = {
-    postData: Array<PostDataType>
-    addPost(text: string): void
-    deletePost(postId: number): void
-    isAuth: boolean
-}
 
-export const MyPosts: React.FC<MyPostsType> = ({postData, addPost, deletePost, isAuth}) => {
+export const MyPosts: React.FC = () => {
 
-    const deleteMyPost=(id: number)=>{
-        deletePost(id)
+    const dispatch = useDispatch<DispatchType>()
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const postData = useAppSelector(state => state.profilePage.postData)
+
+    const deleteMyPost = (id: number) => {
+        dispatch(deletePost({postId: id}))
     }
 
     let postElement = postData
@@ -30,7 +31,7 @@ export const MyPosts: React.FC<MyPostsType> = ({postData, addPost, deletePost, i
 
 
     let addMyPost = (values: FormikValues) => {
-        addPost(values.text)
+        dispatch(addPost({text: values.text}))
     }
     return isAuth ? (
         <div className={classes.postsBlock}>

@@ -1,21 +1,23 @@
 import React from "react";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 import {ProfileType} from "./ProfileContainer";
 import no_profile_img from "./../../assets/images/noPofile.jpg"
+import {MyPosts} from "./MyPosts/MyPosts";
+import {useAppSelector} from "../../redux/store";
 
 
-export const Profile: React.FC<ProfileProps> = ({
+const Profile: React.FC<ProfileProps> = ({
                                                     profile,
-                                                    updateStatus,
                                                     status,
                                                     isOwner,
                                                     savePhoto,
                                                     saveProfile,
                                                     error,
                                                     editMode,
-                                                    isAuth
                                                 }) => {
+
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+
     if (!profile) {
         return <div>
             <img src={no_profile_img} alt={"noProfileImg"}/>
@@ -25,24 +27,22 @@ export const Profile: React.FC<ProfileProps> = ({
         <div>
             <ProfileInfo profile={profile}
                          status={status}
-                         updateStatus={updateStatus}
                          isOwner={isOwner}
                          isAuth={isAuth}
                          savePhoto={savePhoto}
                          editMode={editMode}
                          error={error}
                          saveProfile={saveProfile}/>
-            <MyPostsContainer/>
+            <MyPosts/>
         </div>
     )
 }
 
+export default Profile
+
 interface ProfileProps {
     profile: ProfileType
     status: string
-
-    updateStatus(status: string): void
-
     isOwner: boolean
     isAuth: boolean
 

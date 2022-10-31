@@ -1,10 +1,10 @@
 import React, {useEffect} from "react";
-import {Profile} from "./Profile";
-import {connect} from "react-redux";
+import Profile from "./Profile";
+import {connect, useDispatch} from "react-redux";
 import {getProfile, getStatus, savePhoto, saveProfile, updateStatus} from "../../redux/profile-reducer";
 import {Params, PathMatch, useMatch} from "react-router-dom";
 import {compose} from "redux";
-import {AppStateType} from "../../redux/store";
+import {AppStateType, DispatchType} from "../../redux/store";
 
 export const ProfileURLMatch = (Component: any) => {
     let RouterComponent: (props: ProfileContainerPropsType) => JSX.Element;
@@ -17,9 +17,6 @@ export const ProfileURLMatch = (Component: any) => {
 
 const ProfileContainer: React.FC<ProfileContainerPropsType> = ({
                                                                    profile,
-                                                                   getProfile,
-                                                                   getStatus,
-                                                                   updateStatus,
                                                                    status,
                                                                    meId,
                                                                    match,
@@ -28,20 +25,21 @@ const ProfileContainer: React.FC<ProfileContainerPropsType> = ({
                                                                    editMode,
                                                                    error, isAuth
                                                                }) => {
+    const dispatch = useDispatch<DispatchType>()
+
     useEffect(() => {
         let userId = match
             ? match.params.userId
-            : meId;
+            : meId
         if (userId) {
-            getProfile(userId as number)
-            getStatus(userId as number)
+            dispatch(getProfile({userId: userId as number}))
+            dispatch(getStatus({userId: userId as number}))
         }
     }, [match?.params.userId])
 
     return (
         <Profile profile={profile}
                  status={status}
-                 updateStatus={updateStatus}
                  isOwner={!match?.params.userId}
                  savePhoto={savePhoto}
                  editMode={editMode}
@@ -93,7 +91,6 @@ export type ProfileContainerPropsType = {
     getProfile(userId: number): void
     getStatus(userId: number): void
     status: string
-    updateStatus(status: string): void
     meId: number
     userId: number
     savePhoto(file: File): void

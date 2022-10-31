@@ -2,8 +2,13 @@ import React from "react";
 import classes from "../Profile/ProfileInfo/ProfileInfo.module.css";
 import {useFormik} from "formik";
 import {ProfileType} from "../Profile/ProfileContainer";
+import {useDispatch} from "react-redux";
+import {DispatchType} from "../../redux/store";
+import {saveProfile} from "../../redux/profile-reducer";
 
-const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, saveProfile, error}) => {
+const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, error}) => {
+
+    const dispatch = useDispatch<DispatchType>()
 
     const formik = useFormik({
         initialValues: {
@@ -14,7 +19,9 @@ const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, save
             contacts: profile.contacts || ""
         },
         onSubmit: (values) => {
-            saveProfile(values)
+
+            // @ts-ignore
+            dispatch(saveProfile({profile:values}))
         }
     })
     return (

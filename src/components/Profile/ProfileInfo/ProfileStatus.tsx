@@ -1,21 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import classes from "./ProfileInfo.module.css"
+import {useDispatch} from "react-redux";
+import {DispatchType} from "../../../redux/store";
+import {updateStatus} from "../../../redux/profile-reducer";
 
 interface ProfileStatusPropsType {
     status: string
-
-    updateStatus(status: string): void
-
     isOwner: boolean
     isAuth: boolean
 }
 
 const ProfileStatus: React.FC<ProfileStatusPropsType> = ({
-                                                             updateStatus,
                                                              status,
                                                              isOwner,
                                                              isAuth
                                                          }) => {
+    const dispatch = useDispatch<DispatchType>()
+
     const [editMode, setEditMode] = useState<boolean>(false)
     const [newStatus, setNewStatus] = useState<string>(status)
 
@@ -33,7 +34,7 @@ const ProfileStatus: React.FC<ProfileStatusPropsType> = ({
     }
     const deactivateEditMode = () => {
         setEditMode(false)
-        updateStatus(newStatus)
+        dispatch(updateStatus({status: newStatus}))
     }
 
     const onStatusChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {

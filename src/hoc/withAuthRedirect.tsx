@@ -16,7 +16,7 @@ let mapStateToPropsForRedirect = (state: MapStateToPropsForRedirectParams): MPST
     }
 }
 
-export function withAuthRedirect <T>(Component: ComponentType<T>) {
+export function withAuthRedirect <T>(Component: ComponentType<any>) {
     return connect(mapStateToPropsForRedirect)((props: MPSType) => {
         let {isAuth, ...restProps} = props
         if (!isAuth)

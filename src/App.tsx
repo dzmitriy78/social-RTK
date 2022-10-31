@@ -1,27 +1,31 @@
 import * as React from 'react';
+import {Suspense, useEffect} from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import './App.css';
 import {Navbar} from './components/Navbar/Navbar';
-import {connect} from "react-redux";
+import {useDispatch} from "react-redux";
 import {initial} from "./redux/initial-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import MyErrorBoundary from './components/common/MyErrorBoundary';
-import {Suspense, useEffect} from "react";
-import {AppStateType} from "./redux/store";
+import {DispatchType, useAppSelector} from "./redux/store";
 
-const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"));
-const News = React.lazy(() => import( "./components/News/News"));
-const Music = React.lazy(() => import("./components/Music/Music"));
-const Settings = React.lazy(() => import( "./components/Settings/Settings"));
-const ProfileContainer = React.lazy(() => import( "./components/Profile/ProfileContainer"));
-const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"));
-const HeaderContainer = React.lazy(() => import( "./components/Header/HeaderContainer"));
-const Login = React.lazy(() => import("./components/Login/Login"));
+const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
+const News = React.lazy(() => import( "./components/News/News"))
+const Music = React.lazy(() => import("./components/Music/Music"))
+const Settings = React.lazy(() => import( "./components/Settings/Settings"))
+const ProfileContainer = React.lazy(() => import( "./components/Profile/ProfileContainer"))
+const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"))
+const HeaderContainer = React.lazy(() => import( "./components/Header/HeaderContainer"))
+const Login = React.lazy(() => import("./components/Login/Login"))
 
 
-const App: React.FC<AppPropsType> = ({initial, initialize}) => {
+const App: React.FC = () => {
+
+    const dispatch = useDispatch<DispatchType>()
+    const initialize = useAppSelector(state => state.initial.initialize)
+
     useEffect(() => {
-        initial()
+        dispatch(initial())
     }, [initial])
     if (!initialize) {
         return <Preloader/>
@@ -52,18 +56,7 @@ const App: React.FC<AppPropsType> = ({initial, initialize}) => {
                 </Suspense>
             </MyErrorBoundary>
         </div>
-    );
+    )
 }
 
-function mapStateToProps(state: AppStateType) {
-    return {
-        initialize: state.initial.initialize
-    }
-}
-
-export default connect(mapStateToProps, {initial})(App)
-
-type AppPropsType = {
-    initial: () => void
-    initialize: boolean
-}
+export default App

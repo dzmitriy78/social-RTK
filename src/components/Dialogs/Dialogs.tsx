@@ -2,21 +2,26 @@ import React from "react";
 import classes from "./Dialogs.module.css"
 import {Dialog} from "./Dialog/Dialog";
 import PostForm, {FormikValues} from "../form/PostForm";
-import {MessagePageType} from "./DialogsContainer";
 import {Message} from "./Messages/Messages";
+import {useDispatch} from "react-redux";
+import {DispatchType, useAppSelector} from "../../redux/store";
+import {addDialog} from "../../redux/message-reducer";
 
+export const Dialogs: React.FC = () => {
 
-export const Dialogs: React.FC<DialogsType> = ({addDialog, messagePage}) => {
+    const dispatch = useDispatch<DispatchType>()
+    const messageData = useAppSelector(state => state.messagePage.messageData)
+    const dialogsData = useAppSelector(state => state.messagePage.dialogsData)
 
-    let dialogsElement = messagePage.dialogsData
+    let dialogsElement = dialogsData
         .map((d, i) => <Dialog key={i} avatar={d.avatar} name={d.name} id={d.id}/>);
 
-    let messageElement = messagePage.messageData
+    let messageElement = messageData
         .map((m, i) => <Message key={i} id={m.id} message={m.message}/>);
 
 
     let addNewDialog = (values: FormikValues) => {
-        addDialog(values.text);
+        dispatch(addDialog({dialogText:values.text}))
     }
 
     return (
@@ -30,9 +35,4 @@ export const Dialogs: React.FC<DialogsType> = ({addDialog, messagePage}) => {
             </div>
         </div>
     )
-}
-
-export type DialogsType = {
-    messagePage: MessagePageType
-    addDialog(dialogText: string): void
 }

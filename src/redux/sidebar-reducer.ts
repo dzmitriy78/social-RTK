@@ -1,8 +1,9 @@
-let initialState = {}
+import {createSlice} from "@reduxjs/toolkit";
 
-type SideBarType = typeof initialState
+const slice = createSlice({
+    name: "sidBar",
+    initialState: {},
+    reducers: {}
+})
 
-const sidebarReducer = (state: SideBarType = initialState) => {
-    return state;
-}
-export default sidebarReducer;
+export const sidebarReducer = slice.reducer

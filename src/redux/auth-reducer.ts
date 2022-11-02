@@ -6,7 +6,7 @@ export const authMe = createAsyncThunk("auth/authMe", async (arg, thunkAPI) => {
     try {
         const data = await myAPI.authMe()
         if (data.resultCode === 0) {
-            let {id, email, login} = data.data
+            const {id, email, login} = data.data
             thunkAPI.dispatch(setAuthUserData({userId: id, email, login, isAuth: true}))
         }
     } catch (e) {
@@ -17,7 +17,7 @@ export const authMe = createAsyncThunk("auth/authMe", async (arg, thunkAPI) => {
 export const login = createAsyncThunk("auth/login",
     async (arg: { email: string, password: string, rememberMe: boolean, captcha: string, setStatus: (status: string) => void }, thunkAPI) => {
         try {
-            let data = await myAPI.login(arg.email, arg.password, arg.rememberMe, arg.captcha)
+            const data = await myAPI.login(arg.email, arg.password, arg.rememberMe, arg.captcha)
             if (data.resultCode === 0) {
                 thunkAPI.dispatch(authMe())
             } else {
@@ -32,7 +32,7 @@ export const login = createAsyncThunk("auth/login",
     })
 export const logout = createAsyncThunk("auth/logout", async (arg, thunkAPI) => {
     try {
-        let data = await myAPI.logout()
+        const data = await myAPI.logout()
         if (data.resultCode === 0) {
             thunkAPI.dispatch(setAuthUserData({userId: null, email: null, login: null, isAuth: false}))
         }

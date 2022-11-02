@@ -13,14 +13,14 @@ export const Dialogs: React.FC = () => {
     const messageData = useAppSelector(state => state.messagePage.messageData)
     const dialogsData = useAppSelector(state => state.messagePage.dialogsData)
 
-    let dialogsElement = dialogsData
+    const dialogsElement = dialogsData
         .map((d, i) => <Dialog key={i} avatar={d.avatar} name={d.name} id={d.id}/>);
 
-    let messageElement = messageData
+    const messageElement = messageData
         .map((m, i) => <Message key={i} id={m.id} message={m.message}/>);
 
 
-    let addNewDialog = (values: FormikValues) => {
+    const addNewDialog = (values: FormikValues) => {
         dispatch(addDialog({dialogText:values.text}))
     }
 

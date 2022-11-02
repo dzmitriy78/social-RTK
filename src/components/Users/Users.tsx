@@ -3,27 +3,8 @@ import styles from "./users.module.css"
 import usePagination from "../hooks/usePagination";
 import {User} from "./User";
 
-export type UsersType = {
-    id: number
-    photos: { small: string; large: string }
-    followed: boolean
-    name: string
-    status: string
-}
 
-export type UsersPropsType = {
-    users: Array<UsersType>
-    unfollowing: (userId: number) => void
-    following: (userId: number) => void
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    onPageChanged: (pages: number) => void
-    followingInProgress: Array<number>
-    isAuth: boolean
-}
-
-export let Users: React.FC<UsersPropsType> = (props) => {
+export const Users: React.FC<UsersPropsType> = (props) => {
     const {
         firstContentIndex,
         lastContentIndex,
@@ -43,23 +24,20 @@ export let Users: React.FC<UsersPropsType> = (props) => {
         pages.push(i)
     }
     const goPage = () => {
-        let num: any = prompt("Переход на страницу...")
+        const num: any = prompt("Переход на страницу...")
         setPage(Math.ceil(num / 10))
         props.onPageChanged(num)
     }
     return (<div className={styles.users}>
         <div>
-
             {(
                 <div className={styles.pagination}>
-
                     <button
                         onClick={prevPage}
                         className={page === 1 ? styles.disabled : styles.page}
                     >
                         &larr;
                     </button>
-
                     {pages
                         .slice(firstContentIndex, lastContentIndex)
                         .map((p, i) => {
@@ -67,7 +45,6 @@ export let Users: React.FC<UsersPropsType> = (props) => {
                                 props.onPageChanged(p)
                             }} className={props.currentPage === p ? styles.selectedPage : styles.page}>{p}</span>
                         })}
-
                     <button
                         onClick={nextPage}
                         className={page === totalPages ? styles.page && styles.disabled : styles.page}
@@ -85,12 +62,26 @@ export let Users: React.FC<UsersPropsType> = (props) => {
                 <User key={i}
                       user={u}
                       isAuth={props.isAuth}
-                      following={props.following}
                       followingInProgress={props.followingInProgress}
-                      unfollowing={props.unfollowing}
                 />)
         }
-
-
     </div>)
+}
+
+export type UsersType = {
+    id: number
+    photos: { small: string; large: string }
+    followed: boolean
+    name: string
+    status: string
+}
+
+export type UsersPropsType = {
+    users: Array<UsersType>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    onPageChanged: (pages: number) => void
+    followingInProgress: Array<number>
+    isAuth: boolean
 }

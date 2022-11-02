@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 
 
 export const Dialog: React.FC<DialogType> = ({avatar, id, name}) => {
-    let path = `/dialogs/${id}`;
+    const path = `/dialogs/${id}`
     return (
         <div className={classes.dialog}>
             <img src={avatar} alt={""}/>

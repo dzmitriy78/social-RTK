@@ -3,16 +3,17 @@ import styles from "./users.module.css"
 import userPhoto from "./../../assets/images/user.png"
 import {NavLink} from "react-router-dom";
 import {UsersType} from "./Users";
+import {useDispatch} from "react-redux";
+import {DispatchType} from "../../redux/store";
+import {following, unfollowing} from "../../redux/users-reducer";
 
-export type UserPropsType = {
-    user: UsersType
-    isAuth: boolean
-    following: (userId: number) => void
-    followingInProgress: Array<number>
-    unfollowing: (userId: number) => void
-}
 
-export const User: React.FC<UserPropsType> = ({user, isAuth, following, followingInProgress, unfollowing}) => {
+export const User: React.FC<UserPropsType> = ({user, isAuth, followingInProgress}) => {
+
+    const dispatch = useDispatch<DispatchType>()
+
+    const unfollowHandler = () => dispatch(unfollowing({userId: user.id}))
+    const followHandler = () => dispatch(following({userId: user.id}))
 
     return <div>
                <span>
@@ -27,23 +28,24 @@ export const User: React.FC<UserPropsType> = ({user, isAuth, following, followin
                        {user.followed ?
                            <button className={styles.btn}
                                    disabled={!isAuth || followingInProgress.some((id: number) => id === user.id)}
-                                   onClick={() => {
-                                       unfollowing(user.id)
-                                   }}>Unfollow</button>
+                                   onClick={unfollowHandler}>Unfollow</button>
                            : <button className={styles.btn}
                                      disabled={!isAuth || followingInProgress.some((id: number) => id === user.id)}
-                                     onClick={() => {
-                                         following(user.id)
-                                     }}>Follow</button>}
+                                     onClick={followHandler}>Follow</button>}
                    </div>
                </span>
-                            <span>
-                                <div className={styles.usersName}>{user.name}</div>
-                                <div className={styles.usersDescr}>{user.status}</div>
-                            </span>
-                            <span>
-                                <div className={styles.usersDescr}>{"user.location.city"}</div>
-                                <div className={styles.usersDescr}>{"user.location.country"}</div>
-                            </span>
+        <span>
+            <div className={styles.usersName}>{user.name}</div>
+            <div className={styles.usersDescr}>{user.status}</div>
+        </span>
+        <span>
+            <div className={styles.usersDescr}>{"user.location.city"}</div>
+            <div className={styles.usersDescr}>{"user.location.country"}</div>
+        </span>
     </div>
+}
+export type UserPropsType = {
+    user: UsersType
+    isAuth: boolean
+    followingInProgress: Array<number>
 }

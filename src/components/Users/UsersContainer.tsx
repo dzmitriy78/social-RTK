@@ -2,9 +2,9 @@ import {connect, useDispatch} from "react-redux";
 import {getUsers, setCurrentPage} from "../../redux/users-reducer";
 import {Users, UsersType} from "./Users";
 import React, {useEffect} from "react";
-import Preloader from "../common/Preloader/Preloader";
 import {compose} from "redux";
 import {AppStateType, DispatchType} from "../../redux/store";
+import ProgressBarDemo from "../common/ProgressBar/ProgressBar";
 
 
 const UsersContainer: React.FC<UsersContainerPropsType> = (props) => {
@@ -21,7 +21,7 @@ const UsersContainer: React.FC<UsersContainerPropsType> = (props) => {
     }
 
     return <>
-        {props.isFetching ? <Preloader/> : null}
+        {props.isFetching ? <ProgressBarDemo /> : null}
         <Users
             totalUsersCount={props.totalUsersCount}
             users={props.users}
@@ -49,7 +49,7 @@ let mapStateToProps = (state: AppStateType) => {
 export default compose<React.ComponentType>(
     /* withAuthRedirect,*/
     connect(mapStateToProps, {
-       setCurrentPage, getUsers
+        setCurrentPage, getUsers
     }))
 (UsersContainer)
 

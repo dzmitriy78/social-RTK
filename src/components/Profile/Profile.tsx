@@ -10,8 +10,6 @@ const Profile: React.FC<ProfileProps> = ({
                                                     profile,
                                                     status,
                                                     isOwner,
-                                                    savePhoto,
-                                                    saveProfile,
                                                     error,
                                                     editMode,
                                                 }) => {
@@ -29,10 +27,8 @@ const Profile: React.FC<ProfileProps> = ({
                          status={status}
                          isOwner={isOwner}
                          isAuth={isAuth}
-                         savePhoto={savePhoto}
                          editMode={editMode}
-                         error={error}
-                         saveProfile={saveProfile}/>
+                         error={error}/>
             <MyPosts/>
         </div>
     )
@@ -44,12 +40,6 @@ interface ProfileProps {
     profile: ProfileType
     status: string
     isOwner: boolean
-    isAuth: boolean
-
-    savePhoto(file: File): void
-
     error: string
     editMode: boolean
-
-    saveProfile(profile: ProfileType): void
 }

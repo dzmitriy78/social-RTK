@@ -18,15 +18,19 @@ export const Users: React.FC<UsersPropsType> = (props) => {
         count: props.totalUsersCount,
     });
 
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
-    let pages = [];
+    const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+    const pages = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
     const goPage = () => {
-        const num: any = prompt("Переход на страницу...")
-        setPage(Math.ceil(num / 10))
-        props.onPageChanged(num)
+        const num = Number(prompt("Jump to page..."))
+        if (num > 0) {
+            setPage(Math.ceil(num / 10))
+            props.onPageChanged(num)
+        } else {
+            alert("Invalid page number entered")
+        }
     }
     return (<div className={styles.users}>
         <div>

@@ -1,12 +1,12 @@
 import React, {useEffect} from "react";
 import Profile from "./Profile";
 import {connect, useDispatch} from "react-redux";
-import {getProfile, getStatus, savePhoto, saveProfile, updateStatus} from "../../redux/profile-reducer";
+import {getProfile, getStatus} from "../../redux/profile-reducer";
 import {Params, PathMatch, useMatch} from "react-router-dom";
 import {compose} from "redux";
 import {AppStateType, DispatchType} from "../../redux/store";
 
-export const ProfileURLMatch = (Component: any) => {
+export const ProfileURLMatch = (Component: React.FC<ProfileContainerPropsType>) => {
     let RouterComponent: (props: ProfileContainerPropsType) => JSX.Element;
     RouterComponent = (props: ProfileContainerPropsType) => {
         const match = useMatch('/profile/:userId/');
@@ -20,10 +20,8 @@ const ProfileContainer: React.FC<ProfileContainerPropsType> = ({
                                                                    status,
                                                                    meId,
                                                                    match,
-                                                                   savePhoto,
-                                                                   saveProfile,
                                                                    editMode,
-                                                                   error, isAuth
+                                                                   error
                                                                }) => {
     const dispatch = useDispatch<DispatchType>()
 
@@ -41,12 +39,9 @@ const ProfileContainer: React.FC<ProfileContainerPropsType> = ({
         <Profile profile={profile}
                  status={status}
                  isOwner={!match?.params.userId}
-                 savePhoto={savePhoto}
                  editMode={editMode}
-                 error={error}
-                 saveProfile={saveProfile}
-                 isAuth={isAuth}/>
-    );
+                 error={error}/>
+    )
 }
 
 function mapStateToProps(state: AppStateType) {
@@ -56,12 +51,11 @@ function mapStateToProps(state: AppStateType) {
         meId: state.auth.userId,
         error: state.profilePage.error,
         editMode: state.profilePage.editMode,
-        isAuth: state.auth.isAuth
     }
 }
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getProfile, getStatus, updateStatus, savePhoto, saveProfile}),
+    connect(mapStateToProps, {getProfile, getStatus}),
     ProfileURLMatch,
     /* withAuthRedirect*/)
 (ProfileContainer)
@@ -93,9 +87,6 @@ export type ProfileContainerPropsType = {
     status: string
     meId: number
     userId: number
-    savePhoto(file: File): void
     error: string
     editMode: boolean
-    saveProfile(profile: ProfileType): void
-    isAuth: boolean
 }

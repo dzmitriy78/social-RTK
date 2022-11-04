@@ -5,9 +5,10 @@ import './App.css';
 import {Navbar} from './components/Navbar/Navbar';
 import {useDispatch} from "react-redux";
 import {initial} from "./redux/initial-reducer";
-import Preloader from "./components/common/Preloader/Preloader";
 import MyErrorBoundary from './components/common/MyErrorBoundary';
 import {DispatchType, useAppSelector} from "./redux/store";
+import {ProgressSpinner} from "primereact/progressspinner";
+import 'primereact/resources/primereact.css';
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
 const News = React.lazy(() => import( "./components/News/News"))
@@ -28,7 +29,10 @@ const App: React.FC = () => {
         dispatch(initial())
     }, [initial])
     if (!initialize) {
-        return <Preloader/>
+        return (
+            <div style={{display:"flex"}}>
+                <ProgressSpinner/>
+            </div>)
     }
     return (
         <div className='app-wrapper'>

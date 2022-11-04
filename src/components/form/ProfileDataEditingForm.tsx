@@ -16,12 +16,12 @@ const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, erro
             lookingForAJob: profile.lookingForAJob,
             lookingForAJobDescription: profile.lookingForAJobDescription,
             aboutMe: profile.aboutMe,
-            contacts: profile.contacts || ""
+            contacts: profile.contacts || "",
+            photos: {small: "", large: ""},
+            userId: 0
         },
         onSubmit: (values) => {
-
-            // @ts-ignore
-            dispatch(saveProfile({profile:values}))
+            dispatch(saveProfile({profile: values}))
         }
     })
     return (
@@ -68,25 +68,7 @@ const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, erro
 }
 export default ProfileDataEditingForm
 
-type ValuesType = {
-    fullName: string
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    aboutMe: string
-    contacts: {
-        facebook: string
-        github: string
-        instagram: string
-        mainLink: string
-        twitter: string
-        vk: string
-        website: string
-        youtube: string
-    }
-}
-
 type ProfileDataEditingForm = {
     error: string
     profile: ProfileType
-    saveProfile(values: ValuesType): void
 }

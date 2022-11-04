@@ -7,11 +7,7 @@ const slice = createSlice({
             {id: 1, name: "Dim", avatar: "https://klike.net/uploads/posts/2019-03/1551511801_1.jpg"},
             {id: 2, name: "Andrew", avatar: "https://cdn.freelance.ru/images/att/1324133_900_600.png"},
             {id: 3, name: "John", avatar: "https://cs14.pikabu.ru/post_img/2021/05/08/12/1620504627134515650.jpg"},
-            {
-                id: 4,
-                name: "Silver",
-                avatar: "https://cs14.pikabu.ru/post_img/2021/05/08/12/1620504650176973363.webp"
-            },
+            {id: 4, name: "Silver", avatar: "https://cs14.pikabu.ru/post_img/2021/05/08/12/1620504650176973363.webp"},
             {id: 5, name: "Pam", avatar: "https://cs13.pikabu.ru/post_img/2020/04/17/11/1587146536174888206.webp"},
             {
                 id: 6,
@@ -41,8 +37,3 @@ const slice = createSlice({
 
 export const messageReducer = slice.reducer
 export const {addDialog} = slice.actions
-
-export type MessageDataType = {
-    id: number
-    message: string
-}

@@ -5,7 +5,7 @@ import ProfileStatus from "./ProfileStatus";
 import userPhoto from "./../../../assets/images/user.png"
 import ProfileDataEditingForm from "../../form/ProfileDataEditingForm";
 import {useDispatch} from "react-redux";
-import {setEditMode, setError} from "../../../redux/profile-reducer";
+import {savePhoto, setEditMode, setError} from "../../../redux/profile-reducer";
 import {ProfileType} from "../ProfileContainer";
 import {ProfileData} from "./ProfileData";
 import {DispatchType} from "../../../redux/store";
@@ -15,8 +15,6 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
                                                            profile,
                                                            status,
                                                            isOwner,
-                                                           savePhoto,
-                                                           saveProfile,
                                                            error,
                                                            editMode,
                                                            isAuth
@@ -32,7 +30,7 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
 
     const onPhotoSelect: React.ChangeEventHandler<HTMLInputElement> = (e) => {
         if (e.target.files?.length) {
-            savePhoto(e.target.files[0])
+            dispatch(savePhoto({file: e.target.files[0]}))
         }
     }
 
@@ -67,7 +65,6 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
                     <button className={classes.btn} onClick={disableEditMode}>Cancel editing</button>}
                 {isAuth && isOwner && editMode
                     ? <ProfileDataEditingForm profile={profile}
-                                              saveProfile={saveProfile}
                                               error={error}/>
                     : <ProfileData profile={profile}
                                    goToEditMode={enableEditMode}
@@ -83,8 +80,6 @@ type ProfileInfoType = {
     status: string
     isOwner: boolean
     isAuth: boolean
-    savePhoto(file: File): void
     error: string
     editMode: boolean
-    saveProfile(profile: ProfileType): void
 }

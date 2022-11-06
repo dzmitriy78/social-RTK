@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./ProfileInfo.module.css";
-import {ProfileType} from "../ProfileContainer";
+import {ProfileType} from "../Profile";
 
 const Contacts: React.FC<ContactPropsType> = ({title, value}) => {
     return <div>

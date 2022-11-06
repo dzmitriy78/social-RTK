@@ -1,10 +1,10 @@
 import React from "react";
 import classes from "../Profile/ProfileInfo/ProfileInfo.module.css";
 import {useFormik} from "formik";
-import {ProfileType} from "../Profile/ProfileContainer";
 import {useDispatch} from "react-redux";
 import {DispatchType} from "../../redux/store";
 import {saveProfile} from "../../redux/profile-reducer";
+import {ProfileType} from "../Profile/Profile";
 
 const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, error}) => {
 

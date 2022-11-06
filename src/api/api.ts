@@ -1,6 +1,6 @@
 import axios from "axios";
-import {ProfileType} from "../components/Profile/ProfileContainer";
 import {UsersType} from "../components/Users/Users";
+import {ProfileType} from "../components/Profile/Profile";
 
 const instance = axios.create({
     withCredentials: true,

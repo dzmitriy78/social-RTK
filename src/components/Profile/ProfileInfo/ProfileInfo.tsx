@@ -6,9 +6,9 @@ import userPhoto from "./../../../assets/images/user.png"
 import ProfileDataEditingForm from "../../form/ProfileDataEditingForm";
 import {useDispatch} from "react-redux";
 import {savePhoto, setEditMode, setError} from "../../../redux/profile-reducer";
-import {ProfileType} from "../ProfileContainer";
 import {ProfileData} from "./ProfileData";
 import {DispatchType} from "../../../redux/store";
+import {ProfileType} from "../Profile";
 
 
 export const ProfileInfo: React.FC<ProfileInfoType> = ({

@@ -10,13 +10,13 @@ import {DispatchType, useAppSelector} from "./redux/store";
 import {ProgressSpinner} from "primereact/progressspinner";
 import 'primereact/resources/primereact.css';
 
-const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
+const Header = React.lazy(()=> import("./components/Header/Header"))
+const Dialogs = React.lazy(() => import("./components/Dialogs/Dialogs"))
 const News = React.lazy(() => import( "./components/News/News"))
 const Music = React.lazy(() => import("./components/Music/Music"))
 const Settings = React.lazy(() => import( "./components/Settings/Settings"))
-const ProfileContainer = React.lazy(() => import( "./components/Profile/ProfileContainer"))
-const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"))
-const HeaderContainer = React.lazy(() => import( "./components/Header/HeaderContainer"))
+const Profile = React.lazy(() => import( "./components/Profile/Profile"))
+const Users = React.lazy(() => import("./components/Users/Users"))
 const Login = React.lazy(() => import("./components/Login/Login"))
 
 
@@ -27,7 +27,7 @@ const App: React.FC = () => {
 
     useEffect(() => {
         dispatch(initial())
-    }, [initial])
+    }, [])
     if (!initialize) {
         return (
             <div style={{display:"flex"}}>
@@ -38,14 +38,14 @@ const App: React.FC = () => {
         <div className='app-wrapper'>
             <MyErrorBoundary>
                 <Suspense fallback={<div>Loading...</div>}>
-                    <HeaderContainer/>
+                    <Header/>
                     <Navbar/>
                     <div className={"app-wrapper-content"}>
                         <Routes>
                             <Route path="/" element={<Navigate to={'/profile'}/>}/>
-                            <Route path="/dialogs/*" element={<DialogsContainer/>}/>
-                            <Route path="/profile/*" element={<ProfileContainer/>}/>
-                            <Route path="/users/*" element={<UsersContainer/>}/>
+                            <Route path="/dialogs/*" element={<Dialogs/>}/>
+                            <Route path="/profile/*" element={<Profile/>}/>
+                            <Route path="/users/*" element={<Users/>}/>
                             <Route path="/news/*" element={<News/>}/>
                             <Route path='/music/*' element={<Music/>}/>
                             <Route path="/settings/*" element={<Settings/>}/>

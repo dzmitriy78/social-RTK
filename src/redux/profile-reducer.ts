@@ -1,8 +1,8 @@
-import {ProfileType} from "../components/Profile/ProfileContainer"
 import {profileAPI} from "../api/api"
 import {PostDataType} from "../components/Profile/MyPosts/MyPosts"
 import {AppStateType} from "./store"
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {ProfileType} from "../components/Profile/Profile";
 
 export const getProfile = createAsyncThunk("profile/getProfile", async (arg: { userId: number }, thunkAPI) => {
     try {
@@ -108,7 +108,7 @@ export const {addPost, deletePost, setError, setEditMode} = slice.actions
 
 type initialStateType = {
     postData: PostDataType[]
-    profile: ProfileType | null | { photos: { large: string, small: string } }
+    profile: ProfileType | null
     status: string | ""
     newPostText: string
     error: string | ""

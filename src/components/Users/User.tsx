@@ -44,7 +44,7 @@ export const User: React.FC<UserPropsType> = ({user, isAuth, followingInProgress
         </span>
     </div>
 }
-export type UserPropsType = {
+type UserPropsType = {
     user: UsersType
     isAuth: boolean
     followingInProgress: Array<number>

@@ -1,14 +1,23 @@
 import React from "react";
 import cl from "./Header.module.css";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {DispatchType, useAppSelector} from "../../redux/store";
+import {logout} from "../../redux/auth-reducer";
 
-export type HeaderPropsType = {
-    isAuth: boolean
-    login: string | null
-    logout(): void
-}
 
-export const Header: React.FC<HeaderPropsType> = ({isAuth, logout, login}) => {
+const Header: React.FC = () => {
+
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const login = useAppSelector(state => state.auth.login)
+    const navigate = useNavigate()
+    const dispatch = useDispatch<DispatchType>()
+
+    const logoutHandler = () => {
+        dispatch(logout())
+        navigate ("/login")
+    }
+
     return (
         <header className={cl.header}>
             <img src="https://previews.123rf.com/images/wavy28/wavy281605/wavy28160500900/59350543-hf-logo.jpg"
@@ -17,7 +26,7 @@ export const Header: React.FC<HeaderPropsType> = ({isAuth, logout, login}) => {
                 {
                     isAuth
                         ? <div>{login}
-                            <button className={cl.button} onClick={logout}>Log out</button>
+                            <button className={cl.button} onClick={logoutHandler}>Log out</button>
                         </div>
                         : <NavLink className={cl.button} to={"/login"}>Log in</NavLink>
                 }
@@ -25,3 +34,4 @@ export const Header: React.FC<HeaderPropsType> = ({isAuth, logout, login}) => {
         </header>
     )
 }
+export default Header

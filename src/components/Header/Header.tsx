@@ -13,8 +13,8 @@ const Header: React.FC = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch<DispatchType>()
 
-    const logoutHandler = () => {
-        dispatch(logout())
+    const logoutHandler = async () => {
+        await dispatch(logout())
         navigate ("/login")
     }
 

@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./users.module.css"
 import userPhoto from "./../../assets/images/user.png"
 import {NavLink} from "react-router-dom";
-import {UsersType} from "./Users";
 import {useDispatch} from "react-redux";
 import {DispatchType} from "../../redux/store";
 import {following, unfollowing} from "../../redux/users-reducer";
@@ -44,8 +43,16 @@ export const User: React.FC<UserPropsType> = ({user, isAuth, followingInProgress
         </span>
     </div>
 }
+
+export type UserType = {
+    id: number
+    photos: { small: string; large: string }
+    followed: boolean
+    name: string
+    status: string
+}
 type UserPropsType = {
-    user: UsersType
+    user: UserType
     isAuth: boolean
     followingInProgress: Array<number>
 }

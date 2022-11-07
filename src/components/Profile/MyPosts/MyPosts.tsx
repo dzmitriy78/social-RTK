@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
-import PostForm, {FormikValues} from "../../form/PostForm";
+import DataForm, {FormikValues} from "../../form/DataForm";
 import {useDispatch} from "react-redux";
 import {DispatchType, useAppSelector} from "../../../redux/store";
 import {addPost, deletePost} from "../../../redux/profile-reducer";
@@ -37,11 +37,14 @@ export const MyPosts: React.FC = () => {
         <div className={classes.postsBlock}>
             <h3>My posts</h3>
             <div>
-                <PostForm callback={addMyPost}/>
+                <DataForm callback={addMyPost}
+                          fieldType={'textarea'}
+                          placeholder={'write a message'}
+                          title={"Add post"}/>
                 <div className={classes.posts}>
                     {postElement}
                 </div>
             </div>
         </div>
-    ) : <div></div>;
+    ) : <div></div>
 }

@@ -6,6 +6,7 @@ import {useDispatch} from "react-redux";
 import {DispatchType, useAppSelector} from "../../redux/store";
 import {getUsers, setCurrentPage} from "../../redux/users-reducer";
 import ProgressBarDemo from "../common/ProgressBar/ProgressBar";
+import DataForm, {FormikValues} from "../form/DataForm";
 
 
 const Users: React.FC = () => {
@@ -17,6 +18,7 @@ const Users: React.FC = () => {
     const followingInProgress = useAppSelector(state => state.usersPage.followingInProgress)
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const users = useAppSelector(state => state.usersPage.users)
+    const currentTerm = useAppSelector(state => state.usersPage.filter.term)
 
     const {
         firstContentIndex,
@@ -34,12 +36,12 @@ const Users: React.FC = () => {
     const dispatch = useDispatch<DispatchType>()
 
     useEffect(() => {
-            dispatch(getUsers({currentPage, pageSize}))
+            dispatch(getUsers({currentPage, pageSize, term: ""}))
         }, []
     )
 
     const onPageChanged = (currentPage: number) => {
-        dispatch(getUsers({currentPage, pageSize}))
+        dispatch(getUsers({currentPage, pageSize, term: currentTerm}))
         dispatch(setCurrentPage({currentPage}))
     }
 
@@ -57,9 +59,18 @@ const Users: React.FC = () => {
             alert("Invalid page number entered")
         }
     }
+
+    function onSearch(values: FormikValues) {
+        dispatch(getUsers({currentPage, pageSize, term: values.text}))
+    }
+
     return (
         <div className={styles.users}>
             {isFetching && <ProgressBarDemo/>}
+            <div>
+                <div>Search users:</div>
+                <DataForm callback={onSearch} fieldType={"input"} placeholder={"search"} title={"Search"}/>
+            </div>
             <div>
                 {(
                     <div className={styles.pagination}>
@@ -101,20 +112,3 @@ const Users: React.FC = () => {
 
 export default Users
 
-export type UsersType = {
-    id: number
-    photos: { small: string; large: string }
-    followed: boolean
-    name: string
-    status: string
-}
-
-export type UsersPropsType = {
-    users: Array<UsersType>
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    onPageChanged: (pages: number) => void
-    followingInProgress: Array<number>
-    isAuth: boolean
-}

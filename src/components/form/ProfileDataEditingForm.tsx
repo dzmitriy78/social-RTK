@@ -5,6 +5,7 @@ import {useDispatch} from "react-redux";
 import {DispatchType} from "../../redux/store";
 import {saveProfile} from "../../redux/profile-reducer";
 import {ProfileType} from "../Profile/Profile";
+import {Button} from "primereact/button";
 
 const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, error}) => {
 
@@ -62,7 +63,7 @@ const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, erro
                 })}
             </div>
 
-            <button className={classes.btn} type={'submit'}>Send</button>
+            <Button className={classes.btn} type={'submit'}>Send</Button>
         </form>
     )
 }

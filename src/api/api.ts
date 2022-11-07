@@ -1,6 +1,6 @@
 import axios from "axios";
-import {UsersType} from "../components/Users/Users";
 import {ProfileType} from "../components/Profile/Profile";
+import {UserType} from "../components/Users/User";
 
 const instance = axios.create({
     withCredentials: true,
@@ -11,8 +11,8 @@ const instance = axios.create({
 })
 
 export const usersAPI = {
-    getUsers(currentPage: number, pageSize: number) {
-        return instance.get<GetUsersType>(`users?page=${currentPage}&count=${pageSize}`)
+    getUsers(currentPage: number, pageSize: number, term: string) {
+        return instance.get<GetUsersType>(`users?page=${currentPage}&count=${pageSize}&term=${term}`)
             .then(response => response.data)
     },
     unfollowUser(id: number) {
@@ -72,7 +72,7 @@ export const securityAPI = {
 }
 
 type GetUsersType = {
-    items: UsersType[]
+    items: UserType[]
     totalCount: number
     error: string
 }

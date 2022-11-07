@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./Dialogs.module.css"
 import {Dialog} from "./Dialog/Dialog";
-import PostForm, {FormikValues} from "../form/PostForm";
+import DataForm, {FormikValues} from "../form/DataForm";
 import {Message} from "./Messages/Messages";
 import {useDispatch} from "react-redux";
 import {DispatchType, useAppSelector} from "../../redux/store";
@@ -34,7 +34,10 @@ const Dialogs: React.FC = () => {
             </div>
             <div className={classes.messages}>
                 {messageElement}
-                <PostForm callback={addNewDialog}/>
+                <DataForm callback={addNewDialog}
+                          fieldType={'textarea'}
+                          placeholder={'write a message'}
+                          title={"Add message"}/>
             </div>
         </div>
     )

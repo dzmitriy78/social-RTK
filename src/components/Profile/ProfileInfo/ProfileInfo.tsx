@@ -76,7 +76,7 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
 }
 
 type ProfileInfoType = {
-    profile: ProfileType
+    profile: ProfileType | null
     status: string
     isOwner: boolean
     isAuth: boolean

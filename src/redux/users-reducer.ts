@@ -1,13 +1,14 @@
-import {UsersType} from "../components/Users/Users"
 import {usersAPI} from "../api/api"
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {UserType} from "../components/Users/User";
 
-export const getUsers = createAsyncThunk("users/getUsers", async (arg: { currentPage: number, pageSize: number }, thunkAPI) => {
+export const getUsers = createAsyncThunk("users/getUsers", async (arg: { currentPage: number, pageSize: number, term: string }, thunkAPI) => {
     try {
         thunkAPI.dispatch(toggleFetching({isFetching: true}))
-        let data = await usersAPI.getUsers(arg.currentPage, arg.pageSize)
+        let data = await usersAPI.getUsers(arg.currentPage, arg.pageSize, arg.term)
         thunkAPI.dispatch(toggleFetching({isFetching: false}));
         thunkAPI.dispatch(setTotalUsersCount({totalCount: data.totalCount}))
+        thunkAPI.dispatch(setFilter({filter:{term: arg.term}}))
         return {users: data.items}
     } catch (e) {
         return thunkAPI.rejectWithValue(null)
@@ -37,12 +38,15 @@ export const unfollowing = createAsyncThunk("users/unfollowing", async (arg: { u
 const slice = createSlice({
     name: "users",
     initialState: {
-        users: [] as UsersType[],
+        users: [] as UserType[],
         pageSize: 5,
         totalUsersCount: 0,
         currentPage: 1,
         isFetching: true,
-        followingInProgress: []
+        followingInProgress: [],
+        filter: {
+            term: ""
+        }
     } as initialStateType,
     reducers: {
         toggleFetching: (state, action: PayloadAction<{ isFetching: boolean }>) => {
@@ -58,10 +62,13 @@ const slice = createSlice({
         },
         setCurrentPage: (state, action: PayloadAction<{ currentPage: number }>) => {
             state.currentPage = action.payload.currentPage
+        },
+        setFilter: (state, action: PayloadAction<{ filter: { term: string } }>) => {
+            state.filter = action.payload.filter
         }
     },
     extraReducers: builder => {
-        builder.addCase(getUsers.fulfilled, (state, action: PayloadAction<{ users: Array<UsersType> }>) => {
+        builder.addCase(getUsers.fulfilled, (state, action: PayloadAction<{ users: Array<UserType> }>) => {
             state.users = action.payload.users
         })
         builder.addCase(following.fulfilled, (state, action: PayloadAction<{ userId: number }>) => {
@@ -78,13 +85,16 @@ const slice = createSlice({
 })
 
 export const usersReducer = slice.reducer
-export const {toggleFetching, setTotalUsersCount, toggleFollowingInProgress, setCurrentPage} = slice.actions
+export const {toggleFetching, setTotalUsersCount, toggleFollowingInProgress, setCurrentPage, setFilter} = slice.actions
 
 type initialStateType = {
-    users: UsersType[]
+    users: UserType[]
     pageSize: number
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
     followingInProgress: number[]
+    filter: {
+        term: string
+    }
 }

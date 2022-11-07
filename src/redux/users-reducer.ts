@@ -2,13 +2,13 @@ import {usersAPI} from "../api/api"
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {UserType} from "../components/Users/User";
 
-export const getUsers = createAsyncThunk("users/getUsers", async (arg: { currentPage: number, pageSize: number, term: string }, thunkAPI) => {
+export const getUsers = createAsyncThunk("users/getUsers", async (arg: { currentPage: number, pageSize: number, term: string, friend: null | boolean }, thunkAPI) => {
     try {
         thunkAPI.dispatch(toggleFetching({isFetching: true}))
-        let data = await usersAPI.getUsers(arg.currentPage, arg.pageSize, arg.term)
+        let data = await usersAPI.getUsers(arg.currentPage, arg.pageSize, arg.term, arg.friend)
         thunkAPI.dispatch(toggleFetching({isFetching: false}));
         thunkAPI.dispatch(setTotalUsersCount({totalCount: data.totalCount}))
-        thunkAPI.dispatch(setFilter({filter:{term: arg.term}}))
+        thunkAPI.dispatch(setFilter({filter:{term: arg.term, friend: arg.friend}}))
         return {users: data.items}
     } catch (e) {
         return thunkAPI.rejectWithValue(null)
@@ -45,7 +45,8 @@ const slice = createSlice({
         isFetching: true,
         followingInProgress: [],
         filter: {
-            term: ""
+            term: "",
+            friend: null
         }
     } as initialStateType,
     reducers: {
@@ -63,7 +64,7 @@ const slice = createSlice({
         setCurrentPage: (state, action: PayloadAction<{ currentPage: number }>) => {
             state.currentPage = action.payload.currentPage
         },
-        setFilter: (state, action: PayloadAction<{ filter: { term: string } }>) => {
+        setFilter: (state, action: PayloadAction<{ filter: { term: string, friend: null | boolean } }>) => {
             state.filter = action.payload.filter
         }
     },
@@ -95,6 +96,7 @@ type initialStateType = {
     isFetching: boolean
     followingInProgress: number[]
     filter: {
-        term: string
+        term: string,
+        friend: null | boolean
     }
 }

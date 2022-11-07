@@ -19,6 +19,7 @@ const Users: React.FC = () => {
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const users = useAppSelector(state => state.usersPage.users)
     const currentTerm = useAppSelector(state => state.usersPage.filter.term)
+    const currentFriend = useAppSelector(state => state.usersPage.filter.friend)
 
     const {
         firstContentIndex,
@@ -36,12 +37,12 @@ const Users: React.FC = () => {
     const dispatch = useDispatch<DispatchType>()
 
     useEffect(() => {
-            dispatch(getUsers({currentPage, pageSize, term: ""}))
+            dispatch(getUsers({currentPage, pageSize, term: "", friend: null}))
         }, []
     )
 
-    const onPageChanged = (currentPage: number) => {
-        dispatch(getUsers({currentPage, pageSize, term: currentTerm}))
+    const onPageChanged = (currentPage: number, friend: null | boolean) => {
+        dispatch(getUsers({currentPage, pageSize, term: currentTerm, friend}))
         dispatch(setCurrentPage({currentPage}))
     }
 
@@ -54,14 +55,15 @@ const Users: React.FC = () => {
         const num = Number(prompt("Jump to page..."))
         if (num > 0) {
             setPage(Math.ceil(num / 10))
-            onPageChanged(num)
+            onPageChanged(num, currentFriend)
         } else {
             alert("Invalid page number entered")
         }
     }
 
     function onSearch(values: FormikValues) {
-        dispatch(getUsers({currentPage, pageSize, term: values.text}))
+        dispatch(getUsers({currentPage: 1, pageSize, term: values.text, friend: values.friend}))
+        onPageChanged(1, currentFriend)
     }
 
     return (
@@ -69,7 +71,12 @@ const Users: React.FC = () => {
             {isFetching && <ProgressBarDemo/>}
             <div>
                 <div>Search users:</div>
-                <DataForm callback={onSearch} fieldType={"input"} placeholder={"search"} title={"Search"}/>
+                <DataForm
+                    callback={onSearch}
+                    fieldType={"input"}
+                    placeholder={"search"}
+                    title={"Search"}
+                    select={true}/>
             </div>
             <div>
                 {(
@@ -84,7 +91,7 @@ const Users: React.FC = () => {
                             .slice(firstContentIndex, lastContentIndex)
                             .map((p, i) => {
                                 return <span key={i} onClick={() => {
-                                    onPageChanged(p)
+                                    onPageChanged(p, currentFriend)
                                 }} className={currentPage === p ? styles.selectedPage : styles.page}>{p}</span>
                             })}
                         <button

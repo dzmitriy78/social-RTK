@@ -40,6 +40,7 @@ export const MyPosts: React.FC = () => {
                 <DataForm callback={addMyPost}
                           fieldType={'textarea'}
                           placeholder={'write a message'}
+                          select={false}
                           title={"Add post"}/>
                 <div className={classes.posts}>
                     {postElement}

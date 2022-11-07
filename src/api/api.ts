@@ -11,8 +11,8 @@ const instance = axios.create({
 })
 
 export const usersAPI = {
-    getUsers(currentPage: number, pageSize: number, term: string) {
-        return instance.get<GetUsersType>(`users?page=${currentPage}&count=${pageSize}&term=${term}`)
+    getUsers(currentPage: number, pageSize: number, term: string, friend: null | boolean) {
+        return instance.get<GetUsersType>(`users?page=${currentPage}&count=${pageSize}&term=${term}` + (friend === null? "" :`&friend=${friend}`))
             .then(response => response.data)
     },
     unfollowUser(id: number) {

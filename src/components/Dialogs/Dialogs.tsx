@@ -37,7 +37,8 @@ const Dialogs: React.FC = () => {
                 <DataForm callback={addNewDialog}
                           fieldType={'textarea'}
                           placeholder={'write a message'}
-                          title={"Add message"}/>
+                          title={"Add message"}
+                          select={false}/>
             </div>
         </div>
     )

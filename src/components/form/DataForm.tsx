@@ -25,16 +25,11 @@ const DataForm: React.FC<PostFormProps> = ({callback, fieldType, placeholder, ti
             >
                 {() => (
                     <Form>
-                        <div>`
+                        <div>
                             <Field component={fieldType}
                                    name={'text'}
                                    placeholder={placeholder}/>
                         </div>
-                        {select && <Field as="select" name="friend">
-                            <option value="null">All</option>
-                            <option value="true">Followed</option>
-                            <option value="false">Unfollowed</option>
-                        </Field>}
                         <div className={classes.errorMessage}>
                             <ErrorMessage name="text" component="div"/>
                         </div>
@@ -45,8 +40,8 @@ const DataForm: React.FC<PostFormProps> = ({callback, fieldType, placeholder, ti
                 )}
             </Formik>
         </div>
-    );
-};
+    )
+}
 
 export default DataForm;
 

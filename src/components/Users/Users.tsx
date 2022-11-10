@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import styles from "./users.module.css"
 import usePagination from "../hooks/usePagination";
 import {User} from "./User";
@@ -6,7 +6,7 @@ import {useDispatch} from "react-redux";
 import {DispatchType, useAppSelector} from "../../redux/store";
 import {getUsers, setCurrentPage} from "../../redux/users-reducer";
 import ProgressBarDemo from "../common/ProgressBar/ProgressBar";
-import DataForm, {FormikValues} from "../form/DataForm";
+import SearchUsers from "../form/SearchUsers";
 
 
 const Users: React.FC = () => {
@@ -36,11 +36,6 @@ const Users: React.FC = () => {
 
     const dispatch = useDispatch<DispatchType>()
 
-    useEffect(() => {
-            dispatch(getUsers({currentPage, pageSize, term: "", friend: null}))
-        }, []
-    )
-
     const onPageChanged = (currentPage: number, friend: null | boolean) => {
         dispatch(getUsers({currentPage, pageSize, term: currentTerm, friend}))
         dispatch(setCurrentPage({currentPage}))
@@ -61,23 +56,14 @@ const Users: React.FC = () => {
         }
     }
 
-    function onSearch(values: FormikValues) {
-        dispatch(getUsers({currentPage: 1, pageSize, term: values.text, friend: values.friend}))
-        onPageChanged(1, currentFriend)
+   const onSearch = (value: any, selectedValue: any) => {
+        dispatch(getUsers({currentPage: 1, pageSize, term: value, friend: selectedValue}))
+        // onPageChanged(1, currentFriend)
     }
 
     return (
         <div className={styles.users}>
             {isFetching && <ProgressBarDemo/>}
-            <div>
-                <div>Search users:</div>
-                <DataForm
-                    callback={onSearch}
-                    fieldType={"input"}
-                    placeholder={"search"}
-                    title={"Search"}
-                    select={true}/>
-            </div>
             <div>
                 {(
                     <div className={styles.pagination}>
@@ -106,6 +92,7 @@ const Users: React.FC = () => {
                     </div>
                 )}
             </div>
+            <SearchUsers callback={onSearch}/>
             {
                 users.map((u, i) =>
                     <User key={i}

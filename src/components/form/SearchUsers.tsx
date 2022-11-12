@@ -6,24 +6,22 @@ import {Dropdown} from "primereact/dropdown";
 
 const SearchUsers: React.FC<PropsType> = ({callback}) => {
 
-    const [value, setValue] = useState('')
-    const [selectedValue, setSelectedValue] = useState("null");
+    const [searchValue, setSearchValue] = useState('')
+    const [selectedValue, setSelectedValue] = useState<null | boolean>("null" as unknown as null);
 
-    const debouncedValue = useDebounce<string>(value, 600)
+    const debouncedValue = useDebounce<string>(searchValue, 600)
 
     const friends = [
-        {name: 'all', value: "null"},
-        {name: "friends", value: 'true'},
-        {name: "not friends", value: 'false'},
+        {name: 'all', value: "null" as unknown as null},
+        {name: "friends", value: true},
+        {name: "not friends", value: false},
     ]
 
     useEffect(() => {
-        callback(value, selectedValue)
-        console.log(value)
-        console.log(selectedValue)
+        callback(searchValue, selectedValue)
     }, [debouncedValue, selectedValue])
 
-    const onSelectChange = (e: { value: React.SetStateAction<string> }) => {
+    const onSelectChange = (e: { value: React.SetStateAction<null | boolean> }) => {
         setSelectedValue(e.value)
     }
 
@@ -32,8 +30,9 @@ const SearchUsers: React.FC<PropsType> = ({callback}) => {
             <div className="card">
               <span className="p-input-icon-left">
                     <i className="pi pi-search"/>
-                    <InputText type="search" value={value} onChange={(e) => setValue(e.target.value)}/>
-                    <Dropdown value={selectedValue} options={friends} onChange={onSelectChange} optionLabel="name"/>
+                    <InputText type="search" value={searchValue} onChange={(e) => setSearchValue(e.target.value)}/>
+                    <Dropdown value={selectedValue} optionValue={"value"} options={friends} onChange={onSelectChange}
+                              optionLabel="name"/>
                 </span>
             </div>
         </div>
@@ -43,5 +42,5 @@ const SearchUsers: React.FC<PropsType> = ({callback}) => {
 export default SearchUsers;
 
 type PropsType = {
-    callback(value:string, selectedValue:string): void
+    callback(value: string, selectedValue: null | boolean): void
 }

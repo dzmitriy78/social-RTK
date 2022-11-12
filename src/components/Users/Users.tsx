@@ -56,9 +56,9 @@ const Users: React.FC = () => {
         }
     }
 
-   const onSearch = (value: any, selectedValue: any) => {
+    const onSearch = (value: string, selectedValue: null | boolean) => {
         dispatch(getUsers({currentPage: 1, pageSize, term: value, friend: selectedValue}))
-        // onPageChanged(1, currentFriend)
+        dispatch(setCurrentPage({currentPage: 1}))
     }
 
     return (

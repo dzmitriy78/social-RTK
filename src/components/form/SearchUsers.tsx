@@ -31,7 +31,7 @@ const SearchUsers: React.FC<PropsType> = ({callback}) => {
               <span className="p-input-icon-left">
                     <i className="pi pi-search"/>
                     <InputText type="search" value={searchValue} onChange={(e) => setSearchValue(e.target.value)}/>
-                    <Dropdown value={selectedValue} optionValue={"value"} options={friends} onChange={onSelectChange}
+                    <Dropdown style={{marginLeft:10}} value={selectedValue} optionValue={"value"} options={friends} onChange={onSelectChange}
                               optionLabel="name"/>
                 </span>
             </div>

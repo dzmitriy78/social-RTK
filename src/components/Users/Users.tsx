@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import styles from "./users.module.css"
 import usePagination from "../hooks/usePagination";
 import {User} from "./User";
@@ -8,6 +8,8 @@ import {getUsers, setCurrentPage} from "../../redux/users-reducer";
 import ProgressBarDemo from "../common/ProgressBar/ProgressBar";
 import SearchUsers from "../form/SearchUsers";
 import {useSearchParams} from "react-router-dom";
+import useDebounce from "../hooks/useDebounce";
+import {InputNumber} from "primereact/inputnumber";
 
 
 const Users: React.FC = () => {
@@ -21,7 +23,7 @@ const Users: React.FC = () => {
     const users = useAppSelector(state => state.usersPage.users)
     const term = useAppSelector(state => state.usersPage.filter.term)
     const friend = useAppSelector(state => state.usersPage.filter.friend)
-
+    const blockPage = 10
 
     const {
         firstContentIndex,
@@ -32,13 +34,15 @@ const Users: React.FC = () => {
         setPage,
         totalPages,
     } = usePagination({
-        contentPerPage: 10,
+        contentPerPage: blockPage,
         count: totalUsersCount,
     })
 
     const dispatch = useDispatch<DispatchType>()
 
     const [, setSearchParams] = useSearchParams()
+    const [toPage, setToPage] = useState<number | null>(null)
+    const debouncedValue = useDebounce(toPage, 1000)
 
     useEffect(() => {
         const urlQuery =
@@ -47,6 +51,14 @@ const Users: React.FC = () => {
             + (currentPage === 1 ? '' : `&page=${currentPage}`)
         setSearchParams(urlQuery)
     }, [term, friend])
+
+    useEffect(() => {
+        if (toPage && toPage > 0 && toPage <= pagesCount) {
+            setPage(Math.ceil(toPage / 10))
+            onPageChanged(toPage, friend)
+        }
+        setToPage(null)
+    }, [debouncedValue])
 
     const onPageChanged = (currentPage: number, friend: null | boolean) => {
         dispatch(getUsers({currentPage, pageSize, term, friend}))
@@ -57,15 +69,6 @@ const Users: React.FC = () => {
     const pages = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
-    }
-    const goPage = () => {
-        const num = Number(prompt("Jump to page..."))
-        if (num > 0) {
-            setPage(Math.ceil(num / 10))
-            onPageChanged(num, friend)
-        } else {
-            alert("Invalid page number entered")
-        }
     }
 
     const onSearch = (value: string, selectedValue: null | boolean) => {
@@ -80,51 +83,60 @@ const Users: React.FC = () => {
                 Search users:
             </div>
             <SearchUsers callback={onSearch}/>
-            {
-                users.map((u, i) =>
-                    <User key={i}
-                          user={u}
-                          isAuth={isAuth}
-                          followingInProgress={followingInProgress}
-                    />)
+            {users.map((u, i) =>
+                <User key={i}
+                      user={u}
+                      isAuth={isAuth}
+                      followingInProgress={followingInProgress}
+                />)
             }
             {pages.length
-                ? <div>
-                    {(
-                        <div className={styles.pagination}>
+                ? <>
+                    {<div className={styles.pagination}>
+                        {pages.length > blockPage &&
                             <button
                                 onClick={prevPage}
                                 className={page === 1 ? styles.disabled : styles.page}
                             >
                                 &larr;
-                            </button>
-                            {pages
-                                .slice(firstContentIndex, lastContentIndex)
-                                .map((p, i) => {
-                                    return <span key={i} onClick={() => {
-                                        onPageChanged(p, friend)
-                                    }} className={currentPage === p ? styles.selectedPage : styles.page}>{p}</span>
-                                })}
-                            <button
-                                onClick={nextPage}
-                                className={page === totalPages ? styles.page && styles.disabled : styles.page}
+                            </button>}
+                        {pages
+                            .slice(firstContentIndex, lastContentIndex)
+                            .map((p, i) => {
+                                return <span key={i} onClick={() => {
+                                    onPageChanged(p, friend)
+                                }} className={currentPage === p ? styles.selectedPage : styles.page}>{p}</span>
+                            })}
+                        {pages.length > blockPage &&
+                            <button onClick={nextPage}
+                                    className={page === totalPages ? styles.page && styles.disabled : styles.page}
                             >
                                 &rarr;
-                            </button>
-                            {pages.length > 10
-                                ? <button className={styles.btn} onClick={goPage}>
-                                    Go to
-                                </button>
-                                : ""
-                            }
-                        </div>
-                    )}
-                </div>
+                            </button>}
+                        {pages.length > blockPage &&
+                            <div className="grid">
+                                <div className="field col-12 md:col-3">
+                                    <InputNumber buttonLayout={"horizontal"}
+                                                 size={4} inputId="horizontal"
+                                                 value={toPage} placeholder={"to page..."}
+                                                 max={pagesCount}
+                                                 onChange={(e) => setToPage(e.value)}
+                                                 mode="decimal" showButtons style={{width: '1rem'}}
+                                                 decrementButtonClassName="p-button-primary"
+                                                 incrementButtonClassName="p-button-primary"
+                                                 incrementButtonIcon="pi pi-plus"
+                                                 decrementButtonIcon="pi pi-minus"/>
+                                </div>
+                            </div>
+                        }
+                    </div>}
+                </>
                 : <div className={styles.descr}>
                     Sorry, nothing found :(
                 </div>
             }
-        </div>)
+        </div>
+    )
 }
 
 export default Users

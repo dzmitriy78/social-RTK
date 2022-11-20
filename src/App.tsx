@@ -18,6 +18,7 @@ const Settings = React.lazy(() => import( "./components/Settings/Settings"))
 const Profile = React.lazy(() => import( "./components/Profile/Profile"))
 const Users = React.lazy(() => import("./components/Users/Users"))
 const Login = React.lazy(() => import("./components/Login/Login"))
+const ChatPage = React.lazy(() => import("./components/Chat/ChatPage"))
 
 
 const App: React.FC = () => {
@@ -50,6 +51,7 @@ const App: React.FC = () => {
                             <Route path='/music/*' element={<Music/>}/>
                             <Route path="/settings/*" element={<Settings/>}/>
                             <Route path="/login/*" element={<Login/>}/>
+                            <Route path="/chatPage/*" element={<ChatPage/>}/>
                             <Route path="*" element={
                                 <div style={{fontSize: 60}}>
                                     Page not found!

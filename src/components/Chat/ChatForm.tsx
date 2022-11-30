@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {InputTextarea} from "primereact/inputtextarea";
 import {Button} from "primereact/button";
 import {ws} from "./ChatPage";
+import 'primereact/resources/themes/lara-light-blue/theme.css';
 
 export const ChatForm: React.FC = () => {
 
@@ -16,8 +17,10 @@ export const ChatForm: React.FC = () => {
 
     return (
         <div>
-            <div>
-                <InputTextarea value={message} onChange={(e) => setMessage(e.currentTarget.value)}/>
+            <div className="card">
+                <InputTextarea rows={4} cols={30} autoResize
+                    value={message}
+                    onChange={(e) => setMessage(e.currentTarget.value)}/>
             </div>
             <div>
                 <Button onClick={sendMessage}>Send</Button>

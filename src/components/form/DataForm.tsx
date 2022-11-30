@@ -1,6 +1,8 @@
 import React from 'react';
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import classes from "./PostForm.module.css"
+import classes from "./PostForm.module.css";
+import 'primereact/resources/themes/lara-light-blue/theme.css';
+import {Button} from "primereact/button";
 
 const DataForm: React.FC<PostFormProps> = ({callback, fieldType, placeholder, title, select}) => {
     return (
@@ -33,9 +35,9 @@ const DataForm: React.FC<PostFormProps> = ({callback, fieldType, placeholder, ti
                         <div className={classes.errorMessage}>
                             <ErrorMessage name="text" component="div"/>
                         </div>
-                        <button className={classes.btn}
-                                type={'submit'}
-                        >{title}</button>
+                        <Button type={'submit'}
+                        >{title}
+                        </Button>
                     </Form>
                 )}
             </Formik>

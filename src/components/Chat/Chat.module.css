@@ -1,0 +1,8 @@
+.chatMessages {
+    height: 500px;
+    overflow-y: auto;
+}
+
+.chatAvatar {
+    width: 40px;
+}

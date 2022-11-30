@@ -64,20 +64,20 @@ const Login: React.FC = () => {
                         <div>
                             <Field type={'text'} name={'email'} placeholder={'e-mail'}/>
                         </div>
-                        <div style={{color: "orange"}}>
+                        <div className={classes.error}>
                             <ErrorMessage name="email" component="div"/>
                         </div>
                         <div>
                             <Field type={'password'} name={'password'} placeholder={'password'}/>
                         </div>
-                        <div style={{color: "orange"}}>
+                        <div className={classes.error}>
                             <ErrorMessage name="password" component="div"/>
                         </div>
                         <div>
                             <Field type={'checkbox'} name={'rememberMe'}/>
                             <label htmlFor={'rememberMe'}> remember me </label>
                         </div>
-                        <div style={{color: "orange"}}>{status ? <span>{status}</span> : null}</div>
+                        <div className={classes.error}>{status ? <span>{status}</span> : null}</div>
                         <div>
                             {captchaUrl && <img src={captchaUrl} alt={'captcha'}/>}
                             {captchaUrl && <Field type={'text'} name={'captcha'} placeholder={'insert captcha'}/>}

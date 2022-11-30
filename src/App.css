@@ -15,3 +15,9 @@
     grid-area: c;
     background-color: cornflowerblue;
 }
+.appSpinner {
+    display: flex;
+}
+.pageNotFound {
+    font-size: 60px
+}

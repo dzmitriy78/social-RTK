@@ -83,8 +83,8 @@ const Users: React.FC = () => {
                 Search users:
             </div>
             <SearchUsers callback={onSearch}/>
-            {users.map((u, i) =>
-                <User key={i}
+            {users.map((u) =>
+                <User key={u.id}
                       user={u}
                       isAuth={isAuth}
                       followingInProgress={followingInProgress}

@@ -31,7 +31,7 @@ const App: React.FC = () => {
     }, [])
     if (!initialize) {
         return (
-            <div style={{display:"flex"}}>
+            <div className={"appSpinner"}>
                 <ProgressSpinner/>
             </div>)
     }
@@ -53,7 +53,7 @@ const App: React.FC = () => {
                             <Route path="/login/*" element={<Login/>}/>
                             <Route path="/chatPage/*" element={<ChatPage/>}/>
                             <Route path="*" element={
-                                <div style={{fontSize: 60}}>
+                                <div className={"pageNotFound"}>
                                     Page not found!
                                 </div>
                             }/>

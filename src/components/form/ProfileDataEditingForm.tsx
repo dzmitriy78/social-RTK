@@ -27,7 +27,7 @@ const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, erro
     })
     return (
         <form onSubmit={formik.handleSubmit}>
-            <div style={{color: "darkorange", fontSize: "20px"}}>{error}</div>
+            <div className={classes.error}>{error}</div>
             <div className={classes.description}>
                 <label htmlFor={'fullName'}><b>fullName: </b></label>
                 <input className={classes.contactsEdit} type='text'

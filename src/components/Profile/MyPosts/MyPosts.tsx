@@ -22,19 +22,19 @@ export const MyPosts: React.FC = () => {
         dispatch(deletePost({postId: id}))
     }
 
-    let postElement = postData
-        .map((p: PostDataType, i: number) =>
-            <Post key={i} id={p.id}
+    const postElement = postData
+        .map((p: PostDataType) =>
+            <Post key={p.id} id={p.id}
                   message={p.message}
                   deletePost={deleteMyPost}
                   likes={p.likeCount}/>)
 
 
-    let addMyPost = (values: FormikValues) => {
+    const addMyPost = (values: FormikValues) => {
         dispatch(addPost({text: values.text}))
     }
-    return isAuth ? (
-        <div className={classes.postsBlock}>
+    return isAuth
+        ? <div className={classes.postsBlock}>
             <h3>My posts</h3>
             <div>
                 <DataForm callback={addMyPost}
@@ -47,5 +47,5 @@ export const MyPosts: React.FC = () => {
                 </div>
             </div>
         </div>
-    ) : <div></div>
+        : <div></div>
 }

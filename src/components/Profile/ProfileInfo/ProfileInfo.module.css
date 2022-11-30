@@ -49,3 +49,7 @@
 .status {
     margin: 10px 0;
 }
+.error {
+    color: darkorange;
+    font-size: 20px;
+}

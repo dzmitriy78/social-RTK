@@ -6,3 +6,9 @@
 .chatAvatar {
     width: 40px;
 }
+.descr {
+    font-size: 22px;
+    font-style: italic;
+    font-weight: bold;
+    margin: 5px;
+}

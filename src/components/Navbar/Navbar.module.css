@@ -1,7 +1,7 @@
 
 .nav {
     grid-area: n;
-    background-color: burlywood;
+    background-color: rgba(135, 196, 222, 0.94);
     padding: 20px;
     font-size: large;
 }
@@ -11,4 +11,5 @@
 }
 .item a.activeLink {
     color: #0015ff;
+    font-weight: bold;
 }

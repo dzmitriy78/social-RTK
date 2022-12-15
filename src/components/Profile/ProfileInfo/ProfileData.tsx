@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./ProfileInfo.module.css";
 import {ProfileType} from "../Profile";
 import Contacts from "./Contacts";
+import {Button} from "primereact/button";
 
 
 export const ProfileData: React.FC<ProfileDataType> = ({
@@ -12,7 +13,7 @@ export const ProfileData: React.FC<ProfileDataType> = ({
                                                        }) => {
     return (
         <div className={classes.profileInfo}>
-            {isAuth && isOwner && <button className={classes.btn} onClick={goToEditMode}>Edit profile</button>}
+            {isAuth && isOwner && <Button className={classes.btn} onClick={goToEditMode}>Edit profile</Button>}
             <div className={classes.description}>
                 <div className={classes.name}>  {profile.fullName}</div>
             </div>

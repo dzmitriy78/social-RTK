@@ -19,6 +19,10 @@
 
 .messages {
     padding: 10px;
+    color: indigo;
+    font-family: "Lucida Calligraphy", sans-serif;
+    max-width: 600px;
+    overflow-wrap: break-word;
 }
 
 .dialogsItems img {

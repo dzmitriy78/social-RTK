@@ -9,6 +9,7 @@ import {savePhoto, setEditMode, setError} from "../../../redux/profile-reducer";
 import {ProfileData} from "./ProfileData";
 import {DispatchType} from "../../../redux/store";
 import {ProfileType} from "../Profile";
+import { Button } from "primereact/button";
 
 
 export const ProfileInfo: React.FC<ProfileInfoType> = ({
@@ -52,7 +53,7 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
                 <img className={classes.userPhoto}
                      src={profile.photos.large || userPhoto} alt={"photos"}/>
                 {isAuth && isOwner && <div>
-                    <button className={classes.btn} onClick={handlePick}>Change avatar</button>
+                    <Button className={classes.btn} onClick={handlePick}>Change avatar</Button>
                     <input className={classes.hidden} type={"file"}
                            onChange={onPhotoSelect}
                            ref={filePicker}
@@ -62,7 +63,7 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
                                isAuth={isAuth}
                 />
                 {isAuth && isOwner && editMode &&
-                    <button className={classes.btn} onClick={disableEditMode}>Cancel editing</button>}
+                    <Button className={classes.btn} onClick={disableEditMode}>Cancel editing</Button>}
                 {isAuth && isOwner && editMode
                     ? <ProfileDataEditingForm profile={profile}
                                               error={error}/>

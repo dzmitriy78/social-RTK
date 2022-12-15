@@ -1,6 +1,8 @@
 .postsBlock {
+    max-width: 800px;
     color: indigo;
     padding: 10px;
+    overflow-wrap: break-word;
 }
 .posts {
     margin-top: 10px;

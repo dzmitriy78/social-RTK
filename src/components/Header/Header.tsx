@@ -26,7 +26,7 @@ const Header: React.FC = () => {
                 {
                     isAuth
                         ? <div>{login}
-                            <button className={cl.button} onClick={logoutHandler}>Log out</button>
+                            <button className={cl.button} onClick={logoutHandler}>Exit</button>
                         </div>
                         : <NavLink className={cl.button} to={"/login"}>Log in</NavLink>
                 }

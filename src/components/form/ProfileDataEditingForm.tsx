@@ -6,6 +6,9 @@ import {DispatchType} from "../../redux/store";
 import {saveProfile} from "../../redux/profile-reducer";
 import {ProfileType} from "../Profile/Profile";
 import {Button} from "primereact/button";
+import {InputText} from "primereact/inputtext";
+import {Checkbox} from "primereact/checkbox";
+import {InputTextarea} from "primereact/inputtextarea";
 
 const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, error}) => {
 
@@ -30,32 +33,34 @@ const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, erro
             <div className={classes.error}>{error}</div>
             <div className={classes.description}>
                 <label htmlFor={'fullName'}><b>fullName: </b></label>
-                <input className={classes.contactsEdit} type='text'
+                <InputText className={classes.contactsEdit} type='text'
                        {...formik.getFieldProps("fullName")}
                 />
             </div>
             <div className={classes.description}>
                 <label htmlFor={'lookingForAJob'}> <b>Looking for a job: </b></label>
-                <input className={classes.contactsEdit} type={'checkbox'} defaultChecked={profile.lookingForAJob}
+                <Checkbox className={classes.contactsEdit} type={"checkbox"}
+                          checked={formik.values.lookingForAJob}
+                          defaultChecked={profile.lookingForAJob}
                        {...formik.getFieldProps("lookingForAJob")}
                 />
             </div>
             <div className={classes.description}>
                 <label htmlFor={'lookingForAJobDescription'}> <b>My professional skills: </b></label>
-                <input className={classes.contactsEdit} type='text'
+                <InputText className={classes.contactsEdit} type='text'
                        {...formik.getFieldProps("lookingForAJobDescription")}
                 />
             </div>
             <div className={classes.description}>
                 <label htmlFor={'aboutMe'}><b>AboutMe: </b></label>
-                <textarea className={classes.contactsEdit} {...formik.getFieldProps("aboutMe")}
+                <InputTextarea className={classes.contactsEdit} {...formik.getFieldProps("aboutMe")}
                 />
             </div>
             <div className={classes.description}>
                 <label htmlFor={'contacts'}><b>Contacts</b></label>: {Object.keys(profile.contacts)
                 .map((key, i) => {
                     return <div key={i}>
-                        <b>{key}: <input className={classes.contactsEdit} type='text'
+                        <b>{key}: <InputText className={classes.contactsEdit} type='text'
                                          {...formik.getFieldProps("contacts." + key)}/>
                         </b>
                     </div>

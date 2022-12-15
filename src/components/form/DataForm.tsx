@@ -3,8 +3,18 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import classes from "./PostForm.module.css";
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import {Button} from "primereact/button";
+import {InputTextarea} from "primereact/inputtextarea";
+import {InputText} from "primereact/inputtext";
 
 const DataForm: React.FC<PostFormProps> = ({callback, fieldType, placeholder, title, select}) => {
+
+    const MyInput = ({...props}) => {
+        if (fieldType === 'textarea') {
+            return <InputTextarea rows={3} cols={30} autoResize {...props} />
+        }
+        return <InputText {...props}/>
+    }
+
     return (
         <div>
             <Formik
@@ -28,9 +38,11 @@ const DataForm: React.FC<PostFormProps> = ({callback, fieldType, placeholder, ti
                 {() => (
                     <Form>
                         <div>
-                            <Field component={fieldType}
+                            <Field as={MyInput}
                                    name={'text'}
-                                   placeholder={placeholder}/>
+                                   placeholder={placeholder}
+
+                            />
                         </div>
                         <div className={classes.errorMessage}>
                             <ErrorMessage name="text" component="div"/>
@@ -58,7 +70,7 @@ interface Errors {
 
 interface PostFormProps {
     callback: (values: FormikValues) => void
-    fieldType: string
+    fieldType: any
     placeholder: string
     title: string
     select: boolean

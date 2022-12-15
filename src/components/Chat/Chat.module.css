@@ -1,6 +1,12 @@
+.chat {
+    min-height: 100vh;
+    padding: 20px 20px;
+}
 .chatMessages {
     height: 500px;
+    max-width: 800px;
     overflow-y: auto;
+    overflow-wrap: break-word;
 }
 
 .chatAvatar {

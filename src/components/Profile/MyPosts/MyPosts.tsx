@@ -35,7 +35,7 @@ export const MyPosts: React.FC = () => {
     }
     return isAuth
         ? <div className={classes.postsBlock}>
-            <h3>My posts</h3>
+            <h3>My posts:</h3>
             <div>
                 <DataForm callback={addMyPost}
                           fieldType={'textarea'}

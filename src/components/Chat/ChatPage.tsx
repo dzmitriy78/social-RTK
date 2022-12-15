@@ -1,11 +1,12 @@
 import React from 'react';
 import {Chat} from "./Chat";
+import classes from "./Chat.module.css";
 
 
 const ChatPage: React.FC = () => {
 
     return (
-        <div>
+        <div className={classes.chat}>
             <Chat/>
         </div>
     )

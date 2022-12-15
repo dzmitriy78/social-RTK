@@ -57,7 +57,7 @@ export const ChatForm: React.FC<{ws:WebSocket | null}> = ({ws}) => {
     return (
         <div>
             <div className="card">
-                <InputTextarea rows={4} cols={30} autoResize
+                <InputTextarea rows={3} cols={30} autoResize
                                value={message}
                                onChange={(e) => setMessage(e.currentTarget.value)}/>
             </div>

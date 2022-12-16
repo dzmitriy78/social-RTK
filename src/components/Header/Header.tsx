@@ -1,9 +1,11 @@
 import React from "react";
 import cl from "./Header.module.css";
-import {NavLink, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {DispatchType, useAppSelector} from "../../redux/store";
 import {logout} from "../../redux/auth-reducer";
+import {Button} from "primereact/button";
+import 'primeicons/primeicons.css';
 
 
 const Header: React.FC = () => {
@@ -15,7 +17,10 @@ const Header: React.FC = () => {
 
     const logoutHandler = async () => {
         await dispatch(logout())
-        navigate ("/login")
+        navigate("/login")
+    }
+    const loginHandler = async () => {
+        navigate("/login")
     }
 
     return (
@@ -25,10 +30,18 @@ const Header: React.FC = () => {
             <div className={cl.loginBlock}>
                 {
                     isAuth
-                        ? <div>{login}
-                            <button className={cl.button} onClick={logoutHandler}>Exit</button>
+                        ? <div className={cl.login}>
+                                <i className="pi pi-user"></i>
+                                <span style={{padding: "0px 5px"}}>&nbsp;</span>
+                                {login}
+                            <span style={{padding: "0px 5px"}}>&nbsp;</span>
+                            <Button label="Exit" icon="pi pi-sign-out" iconPos="right" className="p-button-sm"
+                                    onClick={logoutHandler}/>
                         </div>
-                        : <NavLink className={cl.button} to={"/login"}>Log in</NavLink>
+                        : <div className={cl.login}>
+                            <Button label="Log in" icon="pi pi-sign-in" iconPos="right" className="p-button-sm"
+                                    onClick={loginHandler}/>
+                        </div>
                 }
             </div>
         </header>

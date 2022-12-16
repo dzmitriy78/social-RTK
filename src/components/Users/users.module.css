@@ -3,17 +3,10 @@
     margin: 10px 10px;
 }
 .userAvatar {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    margin: 10px 0 0 10px;
-}
-
-.btn {
-    cursor: pointer;
-    border: teal 1px solid;
-    border-radius: 10px;
-    background: #87a9e7;
+    margin: 10px 0 0 25px;
 }
 
 .page {
@@ -31,16 +24,15 @@
     cursor: pointer;
     background-color: darkgray;
 }
-.follow {
-    margin-left: 5px;
-}
+
 .usersDescr {
-    margin-left: 5px;
+    margin-left: 15px;
 }
 .usersName {
-    color: #542d07;
+    color: #0015ff;
+    font-size: 20px;
     font-weight: bold;
-    margin-left: 5px;
+    margin: 5px 0 0 15px;
 }
 .pagination {
     display: flex;

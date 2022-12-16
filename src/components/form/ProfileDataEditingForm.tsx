@@ -9,6 +9,7 @@ import {Button} from "primereact/button";
 import {InputText} from "primereact/inputtext";
 import {Checkbox} from "primereact/checkbox";
 import {InputTextarea} from "primereact/inputtextarea";
+import 'primeicons/primeicons.css';
 
 const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, error}) => {
 
@@ -34,21 +35,19 @@ const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, erro
             <div className={classes.description}>
                 <label htmlFor={'fullName'}><b>fullName: </b></label>
                 <InputText className={classes.contactsEdit} type='text'
-                       {...formik.getFieldProps("fullName")}
+                           {...formik.getFieldProps("fullName")}
                 />
             </div>
             <div className={classes.description}>
                 <label htmlFor={'lookingForAJob'}> <b>Looking for a job: </b></label>
-                <Checkbox className={classes.contactsEdit} type={"checkbox"}
-                          checked={formik.values.lookingForAJob}
-                          defaultChecked={profile.lookingForAJob}
-                       {...formik.getFieldProps("lookingForAJob")}
+                <Checkbox className={classes.contactsEdit} type={"checkbox"} checked={formik.values.lookingForAJob}
+                          {...formik.getFieldProps("lookingForAJob")}
                 />
             </div>
             <div className={classes.description}>
                 <label htmlFor={'lookingForAJobDescription'}> <b>My professional skills: </b></label>
                 <InputText className={classes.contactsEdit} type='text'
-                       {...formik.getFieldProps("lookingForAJobDescription")}
+                           {...formik.getFieldProps("lookingForAJobDescription")}
                 />
             </div>
             <div className={classes.description}>
@@ -61,14 +60,14 @@ const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, erro
                 .map((key, i) => {
                     return <div key={i}>
                         <b>{key}: <InputText className={classes.contactsEdit} type='text'
-                                         {...formik.getFieldProps("contacts." + key)}/>
+                                             {...formik.getFieldProps("contacts." + key)}/>
                         </b>
                     </div>
 
                 })}
             </div>
 
-            <Button className={classes.btn} type={'submit'}>Send</Button>
+            <Button label="Send" icon="pi pi-check" type={'submit'}/>
         </form>
     )
 }

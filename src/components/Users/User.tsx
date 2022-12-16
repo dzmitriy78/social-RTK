@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {DispatchType} from "../../redux/store";
 import {following, unfollowing} from "../../redux/users-reducer";
-
+import {Button} from "primereact/button";
 
 export const User: React.FC<UserPropsType> = ({user, isAuth, followingInProgress}) => {
 
@@ -23,14 +23,16 @@ export const User: React.FC<UserPropsType> = ({user, isAuth, followingInProgress
                             alt={"ava"}/>
                        </NavLink>
                    </div>
-                   <div className={styles.follow}>
-                       {user.followed ?
-                           <button className={styles.btn}
-                                   disabled={!isAuth || followingInProgress.some((id: number) => id === user.id)}
-                                   onClick={unfollowHandler}>Unfollow</button>
-                           : <button className={styles.btn}
+                   <div  className="card">
+                       {user.followed
+                           ? <Button  label="Unfollow" color={"white"} icon="pi pi-times"
+                                      className="p-button-text p-button-raised p-button-rounded p-button-plain p-button-sm"
+                                      disabled={!isAuth || followingInProgress.some((id: number) => id === user.id)}
+                                      onClick={unfollowHandler}/>
+                           : <Button label="Follow" icon="pi pi-check"
+                                     className="p-button-text p-button-rounded p-button-raised p-button-plain p-button-sm"
                                      disabled={!isAuth || followingInProgress.some((id: number) => id === user.id)}
-                                     onClick={followHandler}>Follow</button>}
+                                     onClick={followHandler}/>}
                    </div>
                </span>
         <span>
@@ -38,8 +40,7 @@ export const User: React.FC<UserPropsType> = ({user, isAuth, followingInProgress
             <div className={styles.usersDescr}>{user.status}</div>
         </span>
         <span>
-            <div className={styles.usersDescr}>{"user.location.city"}</div>
-            <div className={styles.usersDescr}>{"user.location.country"}</div>
+            <div className={styles.usersDescr}>{"user"}</div>
         </span>
     </div>
 }

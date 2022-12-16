@@ -53,7 +53,7 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
                 <img className={classes.userPhoto}
                      src={profile.photos.large || userPhoto} alt={"photos"}/>
                 {isAuth && isOwner && <div>
-                    <Button className={classes.btn} onClick={handlePick}>Change avatar</Button>
+                    <Button label="Change avatar" onClick={handlePick}/>
                     <input className={classes.hidden} type={"file"}
                            onChange={onPhotoSelect}
                            ref={filePicker}
@@ -63,7 +63,7 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
                                isAuth={isAuth}
                 />
                 {isAuth && isOwner && editMode &&
-                    <Button className={classes.btn} onClick={disableEditMode}>Cancel editing</Button>}
+                    <Button label="Cancel editing" onClick={disableEditMode}/>}
                 {isAuth && isOwner && editMode
                     ? <ProfileDataEditingForm profile={profile}
                                               error={error}/>

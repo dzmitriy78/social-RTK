@@ -32,3 +32,10 @@
     text-decoration: none;
     font-size: 18px;
 }
+.login {
+    width: 400px;
+    display: inline-flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 8px;
+}

@@ -6,23 +6,27 @@ import * as React from "react";
 import {DispatchType, useAppSelector} from "../../redux/store";
 import classes from "./Login.module.css"
 import {useDispatch} from "react-redux";
+import {InputText} from "primereact/inputtext";
+import {Password} from "primereact/password";
+import {Button} from "primereact/button";
+import {Checkbox} from "primereact/checkbox";
+import 'primeicons/primeicons.css';
 
-
-interface Values {
-    email: string
-    password: string
-    rememberMe: boolean
-    captcha: string
-}
-
-interface Errors {
-    email?: string
-}
 
 const Login: React.FC = () => {
     const dispatch = useDispatch<DispatchType>()
     const isAuth = useAppSelector((state) => state.auth.isAuth)
     const captchaUrl = useAppSelector(state => state.auth.captchaUrl)
+
+    const MyInput = ({...props}) => {
+        if (props.type === "text") {
+            return <InputText {...props} />
+        } else if (props.type === "checkbox") {
+            return <Checkbox {...props}/>
+        } else if (props.type === "password") {
+            return <Password feedback={false} toggleMask {...props}/>
+        }
+    }
 
     if (isAuth) {
         return <Navigate replace to="/profile"/>
@@ -61,29 +65,31 @@ const Login: React.FC = () => {
                 validationSchema={loginFormSchema}>
                 {({status}) => (
                     <Form>
-                        <div>
-                            <Field type={'text'} name={'email'} placeholder={'e-mail'}/>
+                        <div className={classes.input}>
+                            <label htmlFor={'email'}>Email:</label>
+                            <Field as={MyInput} type={"text"} name={'email'} placeholder={'e-mail'}/>
                         </div>
                         <div className={classes.error}>
                             <ErrorMessage name="email" component="div"/>
                         </div>
-                        <div>
-                            <Field type={'password'} name={'password'} placeholder={'password'}/>
+                        <div className={classes.input}>
+                            <label htmlFor={'password'}>Password:</label>
+                            <Field as={MyInput} type={"password"} name={'password'} placeholder={'password'}/>
                         </div>
                         <div className={classes.error}>
                             <ErrorMessage name="password" component="div"/>
                         </div>
-                        <div>
-                            <Field type={'checkbox'} name={'rememberMe'}/>
-                            <label htmlFor={'rememberMe'}> remember me </label>
+                        <div className={classes.checkbox}>
+                            <Field as={MyInput} type={'checkbox'} name={'rememberMe'}/>
+                            <label htmlFor={'rememberMe'}> Remember me </label>
                         </div>
                         <div className={classes.error}>{status ? <span>{status}</span> : null}</div>
                         <div>
                             {captchaUrl && <img src={captchaUrl} alt={'captcha'}/>}
-                            {captchaUrl && <Field type={'text'} name={'captcha'} placeholder={'insert captcha'}/>}
-
+                            {captchaUrl &&
+                                <Field as={MyInput} type={"text"} name={'captcha'} placeholder={'insert captcha'}/>}
                         </div>
-                        <button className={classes.button} type={'submit'}>Log in</button>
+                        <Button className={classes.button} label="Log in" type={'submit'}/>
                     </Form>
                 )}
             </Formik>
@@ -92,3 +98,14 @@ const Login: React.FC = () => {
 };
 
 export default Login
+
+interface Values {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha: string
+}
+
+interface Errors {
+    email?: string
+}

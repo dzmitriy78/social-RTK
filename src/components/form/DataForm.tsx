@@ -41,15 +41,12 @@ const DataForm: React.FC<PostFormProps> = ({callback, fieldType, placeholder, ti
                             <Field as={MyInput}
                                    name={'text'}
                                    placeholder={placeholder}
-
                             />
                         </div>
                         <div className={classes.errorMessage}>
                             <ErrorMessage name="text" component="div"/>
                         </div>
-                        <Button type={'submit'}
-                        >{title}
-                        </Button>
+                        <Button label={title} type={'submit'}/>
                     </Form>
                 )}
             </Formik>
@@ -70,7 +67,7 @@ interface Errors {
 
 interface PostFormProps {
     callback: (values: FormikValues) => void
-    fieldType: any
+    fieldType: string
     placeholder: string
     title: string
     select: boolean

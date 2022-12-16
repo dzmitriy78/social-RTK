@@ -2,18 +2,19 @@ import React, {useEffect, useState} from "react";
 import {InputTextarea} from "primereact/inputtextarea";
 import {Button} from "primereact/button";
 import 'primereact/resources/themes/lara-light-blue/theme.css';
+import 'primeicons/primeicons.css';
 
-export const ChatForm: React.FC<{ws:WebSocket | null}> = ({ws}) => {
+export const ChatForm: React.FC<{ ws: WebSocket | null }> = ({ws}) => {
 
     const [message, setMessage] = useState<string>("")
     const [statusChannel, setStatusChannel] = useState<"pending" | "open">("pending")
 
     useEffect(() => {
-        let openHandler = ()=>{
+        let openHandler = () => {
             setStatusChannel("open")
         }
         ws?.addEventListener("open", openHandler)
-        return ()=>{
+        return () => {
             ws?.removeEventListener("open", openHandler)
         }
     }, [ws])
@@ -62,7 +63,8 @@ export const ChatForm: React.FC<{ws:WebSocket | null}> = ({ws}) => {
                                onChange={(e) => setMessage(e.currentTarget.value)}/>
             </div>
             <div>
-                <Button onClick={sendMessage} disabled={ws === null || statusChannel !== "open"}>Send</Button>
+                <Button label={"Send"} icon="pi pi-check" onClick={sendMessage}
+                        disabled={ws === null || statusChannel !== "open"}/>
             </div>
         </div>
     )

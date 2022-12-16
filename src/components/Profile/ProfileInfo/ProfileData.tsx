@@ -13,7 +13,7 @@ export const ProfileData: React.FC<ProfileDataType> = ({
                                                        }) => {
     return (
         <div className={classes.profileInfo}>
-            {isAuth && isOwner && <Button className={classes.btn} onClick={goToEditMode}>Edit profile</Button>}
+            {isAuth && isOwner && <Button label={"Edit profile"} onClick={goToEditMode}/>}
             <div className={classes.description}>
                 <div className={classes.name}>  {profile.fullName}</div>
             </div>

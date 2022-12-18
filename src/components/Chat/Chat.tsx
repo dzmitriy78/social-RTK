@@ -1,35 +1,22 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {ChatMessages} from "./ChatMessages";
 import {ChatForm} from "./ChatForm";
 import {useAppSelector} from "../../redux/store";
 import {Link} from "react-router-dom";
 import classes from "./Chat.module.css";
+import {useDispatch} from "react-redux";
+import {startMessagesListening, stopMessagesListening} from "../../redux/chat-reducer";
 
 export const Chat: React.FC = () => {
 
     const isAuth = useAppSelector(state => state.auth.isAuth)
-    const [ws, setWs] = useState<WebSocket | null>(null)
+    const dispatch = useDispatch<any>()
 
     useEffect(() => {
-        let wsChannel: WebSocket
-        const closeHandler = () => {
-            console.log("close")
-            setTimeout(createChannel, 1000)
-        }
-
-        function createChannel() {
-                wsChannel?.removeEventListener("close", closeHandler)
-                wsChannel?.close()
-
-            wsChannel = new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx")
-            wsChannel.addEventListener("close", closeHandler)
-            setWs(wsChannel)
-        }
-
-        createChannel()
+        console.log("effect")
+        dispatch(startMessagesListening())
         return () => {
-            wsChannel.removeEventListener("close", closeHandler)
-            wsChannel.close()
+            dispatch(stopMessagesListening())
         }
     }, [])
 
@@ -37,8 +24,8 @@ export const Chat: React.FC = () => {
         <>
             {isAuth
                 ? <div>
-                    <ChatMessages ws={ws}/>
-                    <ChatForm ws={ws}/>
+                    <ChatMessages/>
+                    <ChatForm/>
                 </div>
                 : <div className={classes.descr}>
                     Please <Link to={"/login"}>sign in</Link> to see the chat.

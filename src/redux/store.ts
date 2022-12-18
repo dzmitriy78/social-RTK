@@ -8,6 +8,7 @@ import thunkMiddleware from "redux-thunk";
 import {initialReducer} from "./initial-reducer";
 import {configureStore} from "@reduxjs/toolkit";
 import {TypedUseSelectorHook, useSelector} from "react-redux";
+import {chatReducer} from "./chat-reducer";
 
 let rootReducer = combineReducers(
     {
@@ -16,13 +17,14 @@ let rootReducer = combineReducers(
         usersPage: usersReducer,
         sidebar: sidebarReducer,
         auth: authReducer,
-        initial: initialReducer
+        initial: initialReducer,
+        chat: chatReducer
     }
 )
 
 const store = configureStore({
-        reducer: rootReducer,
-        middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware)
+    reducer: rootReducer,
+    middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware)
 })
 
 export default store;

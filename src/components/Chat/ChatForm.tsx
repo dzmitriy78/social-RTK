@@ -1,29 +1,22 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {InputTextarea} from "primereact/inputtextarea";
 import {Button} from "primereact/button";
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import 'primeicons/primeicons.css';
+import {useDispatch} from "react-redux";
+import {sendMessage} from "../../redux/chat-reducer";
 
-export const ChatForm: React.FC<{ ws: WebSocket | null }> = ({ws}) => {
+export const ChatForm: React.FC = () => {
 
     const [message, setMessage] = useState<string>("")
-    const [statusChannel, setStatusChannel] = useState<"pending" | "open">("pending")
+    //const [statusChannel, setStatusChannel] = useState<"pending" | "open">("pending")
 
-    useEffect(() => {
-        let openHandler = () => {
-            setStatusChannel("open")
-        }
-        ws?.addEventListener("open", openHandler)
-        return () => {
-            ws?.removeEventListener("open", openHandler)
-        }
-    }, [ws])
-
-    const sendMessage = () => {
+    const dispatch = useDispatch<any>()
+    const sendMessageHandler = () => {
         if (!message) {
             return
         }
-        ws?.send(message)
+        dispatch(sendMessage({message}))
         setMessage("")
     }
 
@@ -63,8 +56,8 @@ export const ChatForm: React.FC<{ ws: WebSocket | null }> = ({ws}) => {
                                onChange={(e) => setMessage(e.currentTarget.value)}/>
             </div>
             <div>
-                <Button label={"Send"} icon="pi pi-check" onClick={sendMessage}
-                        disabled={ws === null || statusChannel !== "open"}/>
+                <Button label={"Send"} icon="pi pi-check" onClick={sendMessageHandler}
+                        disabled={false}/>
             </div>
         </div>
     )

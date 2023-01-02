@@ -21,7 +21,7 @@ export const ChatMessages: React.FC = () => {
 
     useEffect(() => {
         if (isAutoScroll)
-            messagesAnchorRef.current?.scrollIntoView({behavior: "smooth"})
+            messagesAnchorRef.current?.scrollIntoView(true)
     }, [messages])
 
     return (

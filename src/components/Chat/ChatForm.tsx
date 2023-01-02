@@ -5,11 +5,12 @@ import 'primereact/resources/themes/lara-light-blue/theme.css';
 import 'primeicons/primeicons.css';
 import {useDispatch} from "react-redux";
 import {sendMessage} from "../../redux/chat-reducer";
+import {useAppSelector} from "../../redux/store";
 
 export const ChatForm: React.FC = () => {
 
+    const status = useAppSelector(state => state.chat.status)
     const [message, setMessage] = useState<string>("")
-    //const [statusChannel, setStatusChannel] = useState<"pending" | "open">("pending")
 
     const dispatch = useDispatch<any>()
     const sendMessageHandler = () => {
@@ -57,7 +58,7 @@ export const ChatForm: React.FC = () => {
             </div>
             <div>
                 <Button label={"Send"} icon="pi pi-check" onClick={sendMessageHandler}
-                        disabled={false}/>
+                        disabled={status !== "ready"}/>
             </div>
         </div>
     )

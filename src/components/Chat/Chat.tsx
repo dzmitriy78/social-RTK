@@ -10,10 +10,10 @@ import {startMessagesListening, stopMessagesListening} from "../../redux/chat-re
 export const Chat: React.FC = () => {
 
     const isAuth = useAppSelector(state => state.auth.isAuth)
+    const status = useAppSelector(state => state.chat.status)
     const dispatch = useDispatch<any>()
 
     useEffect(() => {
-        console.log("effect")
         dispatch(startMessagesListening())
         return () => {
             dispatch(stopMessagesListening())
@@ -22,6 +22,8 @@ export const Chat: React.FC = () => {
 
     return (
         <>
+            {status === "error" && <div>Some error occurred. Please refresh the page</div>}
+
             {isAuth
                 ? <div>
                     <ChatMessages/>

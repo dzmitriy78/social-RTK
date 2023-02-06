@@ -1,4 +1,5 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit"
 import {chatAPI, ChatMessageAPIType, StatusType} from "../api/chatAPI";
 import {v1} from "uuid"
 
@@ -40,7 +41,7 @@ export const stopMessagesListening = createAsyncThunk("chat/stopMessageListening
     }
 })
 export const sendMessage = createAsyncThunk("chat/sendMessage", async (arg: { message: string }, thunkAPI) => {
-    try {
+    try {  
         chatAPI.sendMess(arg.message)
     } catch (e) {
         return thunkAPI.rejectWithValue(null)
@@ -48,7 +49,7 @@ export const sendMessage = createAsyncThunk("chat/sendMessage", async (arg: { me
 })
 
 
-const slice = createSlice({
+const chatSlice = createSlice({
     name: "chat",
     initialState: {
         messages: [] as ChatMessageType[],
@@ -67,7 +68,7 @@ const slice = createSlice({
     }
 })
 
-export const chatReducer = slice.reducer
-export const {messagesReceived, statusChanged} = slice.actions
 
+export const {messagesReceived, statusChanged} = chatSlice.actions
+export default chatSlice.reducer
 type ChatMessageType = ChatMessageAPIType & { id: string }

@@ -3,14 +3,13 @@ import classes from "./Dialogs.module.css"
 import {Dialog} from "./Dialog/Dialog";
 import DataForm, {FormikValues} from "../form/DataForm";
 import {Message} from "./Messages/Messages";
-import {useDispatch} from "react-redux";
-import {DispatchType, useAppSelector} from "../../redux/store";
-import {addDialog} from "../../redux/message-reducer";
+import {addDialog} from "../../redux/messageSlice";
 import {Navigate} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../hooks/hooks";
 
 const Dialogs: React.FC = () => {
 
-    const dispatch = useDispatch<DispatchType>()
+    const dispatch = useAppDispatch()
     const messageData = useAppSelector(state => state.messagePage.messageData)
     const dialogsData = useAppSelector(state => state.messagePage.dialogsData)
     const isAuth = useAppSelector(state => state.auth.isAuth)

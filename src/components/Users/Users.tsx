@@ -2,14 +2,13 @@ import React, {useEffect, useState} from "react";
 import styles from "./users.module.css"
 import usePagination from "../hooks/usePagination";
 import {User} from "./User";
-import {useDispatch} from "react-redux";
-import {DispatchType, useAppSelector} from "../../redux/store";
-import {getUsers, setCurrentPage} from "../../redux/users-reducer";
+import {getUsers, setCurrentPage} from "../../redux/usersSlice";
 import ProgressBarDemo from "../common/ProgressBar/ProgressBar";
 import SearchUsers from "../form/SearchUsers";
 import {useSearchParams} from "react-router-dom";
 import useDebounce from "../hooks/useDebounce";
 import {InputNumber} from "primereact/inputnumber";
+import {useAppDispatch, useAppSelector} from "../hooks/hooks";
 
 
 const Users: React.FC = () => {
@@ -38,7 +37,7 @@ const Users: React.FC = () => {
         count: totalUsersCount,
     })
 
-    const dispatch = useDispatch<DispatchType>()
+    const dispatch = useAppDispatch()
 
     const [, setSearchParams] = useSearchParams()
     const [toPage, setToPage] = useState<number | null>(null)

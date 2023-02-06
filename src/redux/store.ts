@@ -1,34 +1,25 @@
-import {combineReducers} from "redux";
-import {profileReducer} from "./profile-reducer";
-import {messageReducer} from "./message-reducer";
-import {sidebarReducer} from "./sidebar-reducer";
-import {usersReducer} from "./users-reducer";
-import {authReducer} from "./auth-reducer";
+import profileSlice from "./profileSlice";
 import thunkMiddleware from "redux-thunk";
-import {initialReducer} from "./initial-reducer";
 import {configureStore} from "@reduxjs/toolkit";
-import {TypedUseSelectorHook, useSelector} from "react-redux";
-import {chatReducer} from "./chat-reducer";
+import chatSlice from "./chatSlice";
+import initialSlice from "./initialSlice";
+import authSlice from "./authSlice";
+import messageSlice from "./messageSlice";
+import sidebarSlice from "./sidebarSlice";
+import usersSlice from "./usersSlice";
 
-let rootReducer = combineReducers(
-    {
-        profilePage: profileReducer,
-        messagePage: messageReducer,
-        usersPage: usersReducer,
-        sidebar: sidebarReducer,
-        auth: authReducer,
-        initial: initialReducer,
-        chat: chatReducer
-    }
-)
-
-const store = configureStore({
-    reducer: rootReducer,
+export const store = configureStore({
+    reducer: {
+        profilePage: profileSlice,
+        messagePage: messageSlice,
+        usersPage: usersSlice,
+        sidebar: sidebarSlice,
+        auth: authSlice,
+        initial: initialSlice,
+        chat: chatSlice
+    },
     middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware)
 })
 
-export default store;
-
-export const useAppSelector: TypedUseSelectorHook<AppStateType> = useSelector
-export type AppStateType = ReturnType<typeof store.getState>
-export type DispatchType = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

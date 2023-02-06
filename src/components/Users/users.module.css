@@ -22,7 +22,7 @@
     border-radius: 5px;
     padding: 5px;
     cursor: pointer;
-    background-color: darkgray;
+    background-color: rgba(135, 196, 222, 0.94);
 }
 
 .usersDescr {

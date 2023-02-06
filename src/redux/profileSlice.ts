@@ -1,6 +1,6 @@
 import {profileAPI} from "../api/api"
 import {PostDataType} from "../components/Profile/MyPosts/MyPosts"
-import {AppStateType} from "./store"
+import {RootState} from "./store"
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {ProfileType} from "../components/Profile/Profile";
 
@@ -38,7 +38,7 @@ export const savePhoto = createAsyncThunk("profile/savePhoto", async (arg: { fil
 })
 export const saveProfile = createAsyncThunk("profile/saveProfile", async (arg: { profile: ProfileType }, thunkAPI) => {
     try {
-        const state = thunkAPI.getState() as AppStateType
+        const state = thunkAPI.getState() as RootState
         const userId = state.auth.userId
         const res = await profileAPI.updateProfile(arg.profile)
         if (res.resultCode === 0 && userId) {
@@ -52,7 +52,7 @@ export const saveProfile = createAsyncThunk("profile/saveProfile", async (arg: {
         return thunkAPI.rejectWithValue(null)
     }
 })
-const slice = createSlice({
+const profileSlice = createSlice({
     name: "profile",
     initialState: {
         postData: [
@@ -103,8 +103,7 @@ const slice = createSlice({
     }
 })
 
-export const profileReducer = slice.reducer
-export const {addPost, deletePost, setError, setEditMode} = slice.actions
+export const {addPost, deletePost, setError, setEditMode} = profileSlice.actions
 
 type initialStateType = {
     postData: PostDataType[]
@@ -114,3 +113,4 @@ type initialStateType = {
     error: string | ""
     editMode: boolean
 }
+export default profileSlice.reducer

@@ -1,17 +1,16 @@
 import React, {useEffect} from "react";
 import {ChatMessages} from "./ChatMessages";
 import {ChatForm} from "./ChatForm";
-import {useAppSelector} from "../../redux/store";
 import {Link} from "react-router-dom";
 import classes from "./Chat.module.css";
-import {useDispatch} from "react-redux";
-import {startMessagesListening, stopMessagesListening} from "../../redux/chat-reducer";
+import {startMessagesListening, stopMessagesListening} from "../../redux/chatSlice";
+import {useAppDispatch, useAppSelector} from "../hooks/hooks";
 
 export const Chat: React.FC = () => {
 
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const status = useAppSelector(state => state.chat.status)
-    const dispatch = useDispatch<any>()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(startMessagesListening())

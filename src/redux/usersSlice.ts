@@ -35,7 +35,7 @@ export const unfollowing = createAsyncThunk("users/unfollowing", async (arg: { u
     }
 })
 
-const slice = createSlice({
+const usersSlice = createSlice({
     name: "users",
     initialState: {
         users: [] as UserType[],
@@ -85,8 +85,9 @@ const slice = createSlice({
     }
 })
 
-export const usersReducer = slice.reducer
-export const {toggleFetching, setTotalUsersCount, toggleFollowingInProgress, setCurrentPage, setFilter} = slice.actions
+export const {toggleFetching, setTotalUsersCount, toggleFollowingInProgress, setCurrentPage, setFilter} = usersSlice.actions
+
+export default usersSlice.reducer
 
 type initialStateType = {
     users: UserType[]

@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import classes from "./ProfileInfo.module.css"
-import {useDispatch} from "react-redux";
-import {DispatchType} from "../../../redux/store";
-import {updateStatus} from "../../../redux/profile-reducer";
+import {updateStatus} from "../../../redux/profileSlice";
+import {useAppDispatch} from "../../hooks/hooks";
 
 interface ProfileStatusPropsType {
     status: string
@@ -15,7 +14,7 @@ const ProfileStatus: React.FC<ProfileStatusPropsType> = ({
                                                              isOwner,
                                                              isAuth
                                                          }) => {
-    const dispatch = useDispatch<DispatchType>()
+    const dispatch = useAppDispatch()
 
     const [editMode, setEditMode] = useState<boolean>(false)
     const [newStatus, setNewStatus] = useState<string>(status)

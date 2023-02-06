@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
 import {ChatMessage} from "./ChatMessage";
 import classes from "./Chat.module.css"
-import {useSelector} from "react-redux";
-import {AppStateType} from "../../redux/store";
+import {RootState} from "../../redux/store";
+import {useAppSelector} from "../hooks/hooks";
 
 export const ChatMessages: React.FC = () => {
 
-    const messages = useSelector((state: AppStateType) => state.chat.messages)
+    const messages = useAppSelector((state: RootState) => state.chat.messages)
     const messagesAnchorRef = useRef<HTMLDivElement>(null)
     const [isAutoScroll, setIsAutoScroll] = useState(true)
 

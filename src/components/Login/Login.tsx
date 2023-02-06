@@ -1,20 +1,19 @@
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {loginFormSchema} from "../form/formValidation/loginFormSchema";
-import {login} from "../../redux/auth-reducer";
+import {login} from "../../redux/authSlice";
 import {Navigate} from "react-router-dom";
 import * as React from "react";
-import {DispatchType, useAppSelector} from "../../redux/store";
 import classes from "./Login.module.css"
-import {useDispatch} from "react-redux";
 import {InputText} from "primereact/inputtext";
 import {Password} from "primereact/password";
 import {Button} from "primereact/button";
 import {Checkbox} from "primereact/checkbox";
 import 'primeicons/primeicons.css';
+import {useAppDispatch, useAppSelector} from "../hooks/hooks";
 
 
 const Login: React.FC = () => {
-    const dispatch = useDispatch<DispatchType>()
+    const dispatch = useAppDispatch()
     const isAuth = useAppSelector((state) => state.auth.isAuth)
     const captchaUrl = useAppSelector(state => state.auth.captchaUrl)
 

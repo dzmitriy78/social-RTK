@@ -2,11 +2,10 @@ import React, {useEffect} from "react";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import no_profile_img from "./../../assets/images/noPofile.jpg"
 import {MyPosts} from "./MyPosts/MyPosts";
-import {DispatchType, useAppSelector} from "../../redux/store";
 import {PathMatch, useMatch} from "react-router-dom";
 import {compose} from "redux";
-import {useDispatch} from "react-redux";
-import {getProfile, getStatus} from "../../redux/profile-reducer";
+import {getProfile, getStatus} from "../../redux/profileSlice";
+import {useAppDispatch, useAppSelector} from "../hooks/hooks";
 
 
 const ProfileURLMatch = (Component: React.FC<ProfilePropsType>) => {
@@ -27,7 +26,7 @@ const Profile: React.FC<ProfilePropsType> = ({match}) => {
     const error = useAppSelector(state => state.profilePage.error)
     const editMode = useAppSelector(state => state.profilePage.editMode)
 
-    const dispatch = useDispatch<DispatchType>()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         let userId = match

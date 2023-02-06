@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-const slice = createSlice({
+const messageSlice = createSlice({
     name: "message",
     initialState: {
         dialogsData: [
@@ -35,5 +35,5 @@ const slice = createSlice({
     }
 })
 
-export const messageReducer = slice.reducer
-export const {addDialog} = slice.actions
+export const {addDialog} = messageSlice.actions
+export default messageSlice.reducer

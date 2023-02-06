@@ -2,9 +2,8 @@ import React from "react";
 import classes from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
 import DataForm, {FormikValues} from "../../form/DataForm";
-import {useDispatch} from "react-redux";
-import {DispatchType, useAppSelector} from "../../../redux/store";
-import {addPost, deletePost} from "../../../redux/profile-reducer";
+import {addPost, deletePost} from "../../../redux/profileSlice";
+import {useAppDispatch, useAppSelector} from "../../hooks/hooks";
 
 export type PostDataType = {
     id: number
@@ -14,7 +13,7 @@ export type PostDataType = {
 
 export const MyPosts: React.FC = () => {
 
-    const dispatch = useDispatch<DispatchType>()
+    const dispatch = useAppDispatch()
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const postData = useAppSelector(state => state.profilePage.postData)
 

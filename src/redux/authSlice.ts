@@ -50,7 +50,7 @@ export const getCaptcha = createAsyncThunk("auth/getCaptcha", async (arg, thunkA
     }
 })
 
-const slice = createSlice({
+const authSlice = createSlice({
     name: "auth",
     initialState: {
         userId: null,
@@ -72,8 +72,8 @@ const slice = createSlice({
 
 })
 
-export const authReducer = slice.reducer
-export const {setAuthUserData, setCaptcha} = slice.actions
+export const {setAuthUserData, setCaptcha} = authSlice.actions
+export default authSlice.reducer
 
 type InitialStateType = {
     userId: number | null

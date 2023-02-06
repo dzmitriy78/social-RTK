@@ -3,12 +3,11 @@ import {Suspense, useEffect} from 'react';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import './App.css';
 import {Navbar} from './components/Navbar/Navbar';
-import {useDispatch} from "react-redux";
-import {initial} from "./redux/initial-reducer";
+import {initial} from "./redux/initialSlice";
 import MyErrorBoundary from './components/common/MyErrorBoundary';
-import {DispatchType, useAppSelector} from "./redux/store";
 import {ProgressSpinner} from "primereact/progressspinner";
 import 'primereact/resources/primereact.css';
+import {useAppDispatch, useAppSelector} from "./components/hooks/hooks";
 
 const Header = React.lazy(()=> import("./components/Header/Header"))
 const Dialogs = React.lazy(() => import("./components/Dialogs/Dialogs"))
@@ -23,7 +22,7 @@ const ChatPage = React.lazy(() => import("./components/Chat/ChatPage"))
 
 const App: React.FC = () => {
 
-    const dispatch = useDispatch<DispatchType>()
+    const dispatch = useAppDispatch()
     const initialize = useAppSelector(state => state.initial.initialize)
 
     useEffect(() => {

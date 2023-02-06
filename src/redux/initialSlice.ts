@@ -1,4 +1,4 @@
-import {authMe} from "./auth-reducer";
+import {authMe} from "./authSlice";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 export const initial = createAsyncThunk("initial/initial", async (arg, thunkAPI) => {
@@ -11,7 +11,7 @@ export const initial = createAsyncThunk("initial/initial", async (arg, thunkAPI)
     }
 })
 
-const slice = createSlice({
+const initialSlice = createSlice({
     name: "initial",
     initialState: {
         initialize: false
@@ -23,5 +23,5 @@ const slice = createSlice({
     }
 })
 
-export const initialReducer = slice.reducer
-export const {setInitialData} = slice.actions
+export const {setInitialData} = initialSlice.actions
+export default initialSlice.reducer

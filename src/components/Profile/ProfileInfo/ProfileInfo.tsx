@@ -4,12 +4,11 @@ import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
 import userPhoto from "./../../../assets/images/user.png"
 import ProfileDataEditingForm from "../../form/ProfileDataEditingForm";
-import {useDispatch} from "react-redux";
-import {savePhoto, setEditMode, setError} from "../../../redux/profile-reducer";
+import {savePhoto, setEditMode, setError} from "../../../redux/profileSlice";
 import {ProfileData} from "./ProfileData";
-import {DispatchType} from "../../../redux/store";
 import {ProfileType} from "../Profile";
-import { Button } from "primereact/button";
+import {Button} from "primereact/button";
+import {useAppDispatch} from "../../hooks/hooks";
 
 
 export const ProfileInfo: React.FC<ProfileInfoType> = ({
@@ -20,7 +19,7 @@ export const ProfileInfo: React.FC<ProfileInfoType> = ({
                                                            editMode,
                                                            isAuth
                                                        }) => {
-    const dispatch = useDispatch<DispatchType>()
+    const dispatch = useAppDispatch()
     const filePicker = useRef<HTMLInputElement>(null)
 
     if (!profile) {

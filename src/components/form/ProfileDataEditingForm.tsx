@@ -1,19 +1,18 @@
 import React from "react";
 import classes from "../Profile/ProfileInfo/ProfileInfo.module.css";
 import {useFormik} from "formik";
-import {useDispatch} from "react-redux";
-import {DispatchType} from "../../redux/store";
-import {saveProfile} from "../../redux/profile-reducer";
+import {saveProfile} from "../../redux/profileSlice";
 import {ProfileType} from "../Profile/Profile";
 import {Button} from "primereact/button";
 import {InputText} from "primereact/inputtext";
 import {Checkbox} from "primereact/checkbox";
 import {InputTextarea} from "primereact/inputtextarea";
 import 'primeicons/primeicons.css';
+import {useAppDispatch} from "../hooks/hooks";
 
 const ProfileDataEditingForm: React.FC<ProfileDataEditingForm> = ({profile, error}) => {
 
-    const dispatch = useDispatch<DispatchType>()
+    const dispatch = useAppDispatch()
 
     const formik = useFormik({
         initialValues: {

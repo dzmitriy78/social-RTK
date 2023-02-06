@@ -1,9 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-const slice = createSlice({
+const sidebarSlice = createSlice({
     name: "sidBar",
     initialState: {},
     reducers: {}
 })
 
-export const sidebarReducer = slice.reducer
+export default sidebarSlice.reducer

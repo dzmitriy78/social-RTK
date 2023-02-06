@@ -1,11 +1,10 @@
 import React from "react";
 import cl from "./Header.module.css";
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {DispatchType, useAppSelector} from "../../redux/store";
-import {logout} from "../../redux/auth-reducer";
+import {logout} from "../../redux/authSlice";
 import {Button} from "primereact/button";
 import 'primeicons/primeicons.css';
+import {useAppDispatch, useAppSelector} from "../hooks/hooks";
 
 
 const Header: React.FC = () => {
@@ -13,7 +12,7 @@ const Header: React.FC = () => {
     const isAuth = useAppSelector(state => state.auth.isAuth)
     const login = useAppSelector(state => state.auth.login)
     const navigate = useNavigate()
-    const dispatch = useDispatch<DispatchType>()
+    const dispatch = useAppDispatch()
 
     const logoutHandler = async () => {
         await dispatch(logout())
@@ -31,9 +30,9 @@ const Header: React.FC = () => {
                 {
                     isAuth
                         ? <div className={cl.login}>
-                                <i className="pi pi-user"></i>
-                                <span style={{padding: "0px 5px"}}>&nbsp;</span>
-                                {login}
+                            <i className="pi pi-user"></i>
+                            <span style={{padding: "0px 5px"}}>&nbsp;</span>
+                            {login}
                             <span style={{padding: "0px 5px"}}>&nbsp;</span>
                             <Button label="Exit" icon="pi pi-sign-out" iconPos="right" className="p-button-sm"
                                     onClick={logoutHandler}/>
